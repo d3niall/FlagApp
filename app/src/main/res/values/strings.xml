@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FlagApp</string>
+    <string name="ratio_button_description">Flag ratio</string>
+    <string name="first_toobar_item_description">Image on the first toolbar</string>
+</resources>

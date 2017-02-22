@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_tab_dark">
+
+    <ImageView
+            android:contentDescription="@string/first_toobar_item_description"
+            android:layout_marginTop="@dimen/side_toolbar_item_image_margin"
+            android:layout_marginBottom="@dimen/side_toolbar_item_image_margin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_add_circle"
+    />
+
+</LinearLayout>
