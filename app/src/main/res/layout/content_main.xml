@@ -26,7 +26,7 @@
                 android:layout_height="@dimen/top_ratio_bottom_height"
                 android:gravity="center"
                 android:background="@drawable/background_right_lines">
-            <ImageView
+            <ImageButton
                     android:contentDescription="@string/ratio_button_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
             android:id="@+id/second_toolbar"
             android:layout_width="@dimen/side_toolbar_width"
             android:layout_height="match_parent"
@@ -57,12 +57,23 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/background_top_bottom_lines">
 
-        <View android:layout_width="match_parent" android:layout_height="1dp"/>
+        <View
+                android:id="@+id/second_toolbar_spacer_top"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentTop="true"/>
+        <View
+                android:id="@+id/second_toolbar_spacer_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"/>
 
         <ScrollView
                 xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_below="@id/second_toolbar_spacer_top"
+                android:layout_above="@id/second_toolbar_spacer_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
             <LinearLayout
                     android:orientation="vertical"
@@ -78,12 +89,34 @@
                 <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:src="@drawable/ic_aigu_angle"/>
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/ic_sym_hor"/>
 
                 <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_sym_ver"/>
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_eq_hor"/>
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_eq_ver"/>
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_invert_hor"/>
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_invert_ver"/>
+
                 <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -96,9 +129,8 @@
             </LinearLayout>
         </ScrollView>
 
-        <View android:layout_width="match_parent" android:layout_height="1dp"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <com.doulaize.flagapp.SimpleDrawingView
             android:id="@+id/drawing_area"
@@ -110,55 +142,56 @@
             android:layout_toEndOf="@+id/second_toolbar"
             android:layout_toStartOf="@+id/right_toolbar"/>
 
+
     <LinearLayout
-            android:id="@+id/right_toolbar"
-            android:layout_width="@dimen/side_toolbar_width"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/background_top_bottom_right_lines">
+            android:background="@drawable/background_top_bottom_right_lines"
+            android:orientation="vertical"
+            android:id="@+id/right_toolbar"
+            android:layout_width="@dimen/side_toolbar_width"
+            android:gravity="center"
+            android:layout_height="wrap_content">
 
-        <View android:layout_width="match_parent" android:layout_height="1dp"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_grid"/>
 
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_brush"/>
 
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_grid"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_undo"/>
 
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_brush"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_redo"/>
 
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_undo"/>
+        <View android:layout_width="match_parent" android:layout_height="0dp"
+              android:layout_weight="1"/>
 
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_redo"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_visibility"/>
+
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_visibility_off"/>
 
 
-                <View android:layout_width="match_parent" android:layout_height="0dp"
-                      android:layout_weight="1"/>
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_delete"/>
-
-            </LinearLayout>
-
-        <View android:layout_width="match_parent" android:layout_height="1dp"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete"/>
 
     </LinearLayout>
 

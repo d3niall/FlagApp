@@ -1,5 +1,7 @@
 package com.doulaize.flagapp;
 
+import com.doulaize.flagapp.model.Flag;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,6 +17,7 @@ import android.view.View;
 public class SimpleDrawingView extends View {
     // setup initial color
     private final int paintColor = Color.BLACK;
+    Flag mFlag;
     // defines paint and canvas
     private Paint drawPaint;
     // stores next circle
@@ -25,6 +28,10 @@ public class SimpleDrawingView extends View {
         setFocusable(true);
         setFocusableInTouchMode(true);
         setupPaint();
+    }
+
+    public void setFlag(Flag flag) {
+        mFlag = flag;
     }
 
     private void setupPaint() {
@@ -38,9 +45,14 @@ public class SimpleDrawingView extends View {
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
+
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawPath(path, drawPaint);
+        if (mFlag == null)
+            throw new IllegalStateException();
+
+        mFlag.onDraw(canvas);
     }
 
     @Override

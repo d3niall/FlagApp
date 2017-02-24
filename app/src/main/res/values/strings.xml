@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">FlagApp</string>
     <string name="ratio_button_description">Flag ratio</string>
-    <string name="first_toobar_item_description">Image on the first toolbar</string>
+    <string name="first_toolbar_item_description">Image on the first toolbar</string>
+    <string name="drawer_label_new_flag">New Flag</string>
+    <string name="drawer_label_gallery">Show Gallery</string>
+    <string name="drawer_label_share">Share</string>
 </resources>

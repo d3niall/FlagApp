@@ -2,6 +2,10 @@ package com.doulaize.flagapp.patterns;
 
 import com.doulaize.flagapp.exception.CoordinateException;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +14,23 @@ import java.util.List;
  */
 public class Pale {
 
+
+    // setup initial color
+    private final int paintColor = Color.RED;
+    // defines paint and canvas
+    private Paint drawPaint;
+
     private Integer mMinCoordinate;
     private Integer mMaxCoordinate;
     private List<Integer> mCoordinates;
     private List<Integer> mSecondaryCoordinates;
     private Boolean isRegular;
 
-    void Pale(Integer aMin, Integer aMax) {
+    public Pale() {
+
+    }
+
+    public Pale(Integer aMin, Integer aMax) {
 
         mMinCoordinate = aMin;
         mMaxCoordinate = aMax;
@@ -56,6 +70,23 @@ public class Pale {
         }
     }
 
+    private void setupPaint() {
+        // Setup paint with color and stroke styles
+        drawPaint = new Paint();
+        drawPaint.setColor(paintColor);
+        drawPaint.setAntiAlias(true);
+        drawPaint.setStrokeWidth(5);
+        drawPaint.setStyle(Paint.Style.STROKE);
+        drawPaint.setStrokeJoin(Paint.Join.ROUND);
+        drawPaint.setStrokeCap(Paint.Cap.ROUND);
+    }
+
+    public void onDraw(Canvas canvas) {
+        if (drawPaint == null)
+            setupPaint();
+
+        canvas.drawCircle(20, 20, 15, drawPaint);
+    }
 
     public Integer getMinCoordinate() {
         return mMinCoordinate;

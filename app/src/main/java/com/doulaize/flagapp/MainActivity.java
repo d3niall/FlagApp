@@ -2,20 +2,23 @@ package com.doulaize.flagapp;
 
 import com.doulaize.flagapp.adapter.ToolbarAdapter;
 import com.doulaize.flagapp.model.Flag;
-import com.doulaize.flagapp.model.Layer;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Flag mFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +33,33 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Flag f = new Flag();
+        SimpleDrawingView simpleDrawingView = (SimpleDrawingView) findViewById(R.id.drawing_area);
 
-        for (int i = 0; i < 4; i++) {
-            Layer l = new Layer();
-            l.setActive(false);
-            if (i == 2)
-                l.setActive(true);
-            f.addLayer(l);
-        }
+        Integer sizeOfTick = getResources().getDimensionPixelSize(R.dimen.tick_size);
 
-        ToolbarAdapter adapter = new ToolbarAdapter(this, R.layout.first_toolbar_item, f.getLayers());
+        mFlag = new Flag(simpleDrawingView.getWidth() - 2 * sizeOfTick, simpleDrawingView.getHeight() - 2 * sizeOfTick);
+
+//        for (int i = 0; i < 4; i++) {
+//            Layer l = new Layer(i);
+//            l.setActive(false);
+//            if (i == 2)
+//                l.setActive(true);
+//            mFlag.addLayer(l);
+//        }
+
+        ToolbarAdapter adapter = new ToolbarAdapter(this, R.layout.first_toolbar_item, mFlag.getLayers());
 
         ListView listView = (ListView) findViewById(R.id.first_toolbar_list);
         listView.setAdapter(adapter);
 
+        ImageButton b = new ImageButton(this);
+        b.setBackgroundResource(R.drawable.background_right_lines);
+        b.setImageDrawable(getDrawable(R.drawable.ic_add_layer));
+        listView.addFooterView(b);
+
+        simpleDrawingView.setFlag(mFlag);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -59,7 +73,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -68,8 +82,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_new) {
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 

@@ -6,24 +6,20 @@
         <item
                 android:id="@+id/nav_new"
                 android:icon="@drawable/ic_menu_new"
-                android:title="New"/>
+                android:title="@string/drawer_label_new_flag"/>
         <item
                 android:id="@+id/nav_gallery"
                 android:icon="@drawable/ic_menu_gallery"
-                android:title="Gallery"/>
+                android:title="@string/drawer_label_gallery"/>
 
     </group>
 
     <group android:checkableBehavior="none">
 
-            <item
-                    android:id="@+id/nav_share"
-                    android:icon="@drawable/ic_menu_share"
-                    android:title="Share"/>
-            <item
-                    android:id="@+id/nav_send"
-                    android:icon="@drawable/ic_menu_send"
-                    android:title="Send"/>
+        <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/drawer_label_share"/>
 
     </group>
 
