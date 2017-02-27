@@ -3,6 +3,7 @@ package com.doulaize.flagapp;
 import com.doulaize.flagapp.adapter.ToolbarAdapter;
 import com.doulaize.flagapp.model.Flag;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,9 +11,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
@@ -52,10 +54,8 @@ public class MainActivity extends AppCompatActivity
         ListView listView = (ListView) findViewById(R.id.first_toolbar_list);
         listView.setAdapter(adapter);
 
-        ImageButton b = new ImageButton(this);
-        b.setBackgroundResource(R.drawable.background_right_lines);
-        b.setImageDrawable(getDrawable(R.drawable.ic_add_layer));
-        listView.addFooterView(b);
+        View l = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_layer_button, null, false);
+        listView.addFooterView(l);
 
         simpleDrawingView.setFlag(mFlag);
     }

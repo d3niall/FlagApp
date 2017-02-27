@@ -73,7 +73,9 @@
                 android:layout_below="@id/second_toolbar_spacer_top"
                 android:layout_above="@id/second_toolbar_spacer_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+        >
 
             <LinearLayout
                     android:orientation="vertical"
