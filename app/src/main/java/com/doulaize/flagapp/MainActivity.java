@@ -3,6 +3,8 @@ package com.doulaize.flagapp;
 import com.doulaize.flagapp.adapter.ToolbarAdapter;
 import com.doulaize.flagapp.model.Flag;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -40,14 +42,6 @@ public class MainActivity extends AppCompatActivity
         Integer sizeOfTick = getResources().getDimensionPixelSize(R.dimen.tick_size);
 
         mFlag = new Flag(simpleDrawingView.getWidth() - 2 * sizeOfTick, simpleDrawingView.getHeight() - 2 * sizeOfTick);
-
-//        for (int i = 0; i < 4; i++) {
-//            Layer l = new Layer(i);
-//            l.setActive(false);
-//            if (i == 2)
-//                l.setActive(true);
-//            mFlag.addLayer(l);
-//        }
 
         ToolbarAdapter adapter = new ToolbarAdapter(this, R.layout.first_toolbar_item, mFlag.getLayers());
 
@@ -88,5 +82,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void onClickAddLayer(View v) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        NewLayerDialogFragment newFragment = NewLayerDialogFragment.newInstance();
+
+        newFragment.show(ft, "");
     }
 }

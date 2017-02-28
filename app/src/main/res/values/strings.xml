@@ -5,4 +5,5 @@
     <string name="drawer_label_new_flag">New Flag</string>
     <string name="drawer_label_gallery">Show Gallery</string>
     <string name="drawer_label_share">Share</string>
+    <string name="text_select_new_layer_pattern">Select a pattern for the new layer</string>
 </resources>

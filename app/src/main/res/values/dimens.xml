@@ -9,4 +9,7 @@
     <dimen name="side_toolbar_width">50dp</dimen>
     <dimen name="side_toolbar_item_image_margin">3dp</dimen>
     <dimen name="tick_size">25dp</dimen>
+
+    <dimen name="new_layer_pattern_width">60dp</dimen>
+    <dimen name="new_layer_pattern_height">45dp</dimen>
 </resources>
