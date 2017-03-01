@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import java.util.List;
 
 /**
- * Created by rdeleuze on 2/21/17.
+ * Created by rdeleuze on 2/21/2017
  */
 
 public class ToolbarAdapter extends ArrayAdapter<Layer> {

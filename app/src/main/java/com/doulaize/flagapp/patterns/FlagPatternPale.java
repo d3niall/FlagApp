@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by rdeleuze on 2/16/17.
+ * Created by rdeleuze on 2/16/2017
  */
-public class Pale {
+public class FlagPatternPale implements PatternInterface {
 
 
     // setup initial color
@@ -26,11 +26,12 @@ public class Pale {
     private List<Integer> mSecondaryCoordinates;
     private Boolean isRegular;
 
-    public Pale() {
+
+    public FlagPatternPale() {
 
     }
 
-    public Pale(Integer aMin, Integer aMax) {
+    public FlagPatternPale(Integer aMin, Integer aMax) {
 
         mMinCoordinate = aMin;
         mMaxCoordinate = aMax;
@@ -81,6 +82,13 @@ public class Pale {
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
+
+    @Override
+    public patternTypeEnum getPatternType() {
+        return patternTypeEnum.PALE;
+    }
+
+    @Override
     public void onDraw(Canvas canvas) {
         if (drawPaint == null)
             setupPaint();
@@ -88,35 +96,4 @@ public class Pale {
         canvas.drawCircle(20, 20, 15, drawPaint);
     }
 
-    public Integer getMinCoordinate() {
-        return mMinCoordinate;
-    }
-
-    public void setMinCoordinate(Integer minCoordinate) {
-        mMinCoordinate = minCoordinate;
-    }
-
-    public Integer getMaxCoordinate() {
-        return mMaxCoordinate;
-    }
-
-    public void setMaxCoordinate(Integer maxCoordinate) {
-        mMaxCoordinate = maxCoordinate;
-    }
-
-    public List<Integer> getCoordinates() {
-        return mCoordinates;
-    }
-
-    public void setCoordinates(List<Integer> coordinates) {
-        mCoordinates = coordinates;
-    }
-
-    public Boolean getRegular() {
-        return isRegular;
-    }
-
-    public void setRegular(Boolean regular) {
-        isRegular = regular;
-    }
 }

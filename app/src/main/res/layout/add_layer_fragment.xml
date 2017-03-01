@@ -7,7 +7,6 @@
         android:foregroundGravity="center">
 
     <GridLayout
-            android:id="@+id/patterns_grid_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -19,48 +18,56 @@
                 android:layout_width="@dimen/new_layer_pattern_width"
                 android:layout_height="@dimen/new_layer_pattern_height"
                 app:srcCompat="@drawable/pattern_pale"
+                android:id="@+id/pattern_pale"
         />
         <ImageView
                 android:layout_margin="@dimen/nav_header_vertical_spacing"
                 android:layout_width="@dimen/new_layer_pattern_width"
                 android:layout_height="@dimen/new_layer_pattern_height"
                 app:srcCompat="@drawable/pattern_fess"
+                android:id="@+id/pattern_fess"
         />
         <ImageView
                 android:layout_margin="@dimen/nav_header_vertical_spacing"
                 android:layout_width="@dimen/new_layer_pattern_width"
                 android:layout_height="@dimen/new_layer_pattern_height"
                 app:srcCompat="@drawable/pattern_pall"
+                android:id="@+id/pattern_pall"
         />
         <ImageView
                 android:layout_margin="@dimen/nav_header_vertical_spacing"
                 android:layout_width="@dimen/new_layer_pattern_width"
                 android:layout_height="@dimen/new_layer_pattern_height"
                 app:srcCompat="@drawable/pattern_cross"
+                android:id="@+id/pattern_cross"
         />
         <ImageView
                 android:layout_margin="@dimen/nav_header_vertical_spacing"
                 android:layout_width="@dimen/new_layer_pattern_width"
                 android:layout_height="@dimen/new_layer_pattern_height"
                 app:srcCompat="@drawable/pattern_saltire"
+                android:id="@+id/pattern_saltire"
         />
         <ImageView
                 android:layout_margin="@dimen/nav_header_vertical_spacing"
                 android:layout_width="@dimen/new_layer_pattern_width"
                 android:layout_height="@dimen/new_layer_pattern_height"
                 app:srcCompat="@drawable/pattern_greekcross"
+                android:id="@+id/pattern_greekcross"
         />
         <ImageView
                 android:layout_margin="@dimen/nav_header_vertical_spacing"
                 android:layout_width="@dimen/new_layer_pattern_width"
                 android:layout_height="@dimen/new_layer_pattern_height"
                 app:srcCompat="@drawable/pattern_quadrisection"
+                android:id="@+id/pattern_quadrisection"
         />
         <ImageView
                 android:layout_margin="@dimen/nav_header_vertical_spacing"
                 android:layout_width="@dimen/new_layer_pattern_width"
                 android:layout_height="@dimen/new_layer_pattern_height"
                 app:srcCompat="@drawable/pattern_border"
+                android:id="@+id/pattern_border"
         />
     </GridLayout>
 

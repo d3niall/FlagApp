@@ -2,6 +2,7 @@ package com.doulaize.flagapp;
 
 import com.doulaize.flagapp.adapter.ToolbarAdapter;
 import com.doulaize.flagapp.model.Flag;
+import com.doulaize.flagapp.patterns.PatternInterface;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -20,7 +21,7 @@ import android.view.WindowManager;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SelectFlagPatternListener {
 
     Flag mFlag;
 
@@ -94,5 +95,11 @@ public class MainActivity extends AppCompatActivity
         NewLayerDialogFragment newFragment = NewLayerDialogFragment.newInstance();
 
         newFragment.show(ft, "");
+        newFragment.setSelectorListener(this);
+    }
+
+    public void OnPatternSelected(PatternInterface.patternTypeEnum patternTypeEnum) {
+
+        mFlag.addLayer(patternTypeEnum);
     }
 }

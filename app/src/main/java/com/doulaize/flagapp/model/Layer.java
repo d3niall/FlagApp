@@ -1,6 +1,14 @@
 package com.doulaize.flagapp.model;
 
-import com.doulaize.flagapp.patterns.Pale;
+import com.doulaize.flagapp.patterns.FlagPatternBorder;
+import com.doulaize.flagapp.patterns.FlagPatternCross;
+import com.doulaize.flagapp.patterns.FlagPatternFess;
+import com.doulaize.flagapp.patterns.FlagPatternGreekCross;
+import com.doulaize.flagapp.patterns.FlagPatternPale;
+import com.doulaize.flagapp.patterns.FlagPatternPall;
+import com.doulaize.flagapp.patterns.FlagPatternQuadrisection;
+import com.doulaize.flagapp.patterns.FlagPatternSaltire;
+import com.doulaize.flagapp.patterns.PatternInterface;
 
 import android.graphics.Canvas;
 
@@ -10,46 +18,48 @@ import android.graphics.Canvas;
 
 public class Layer {
 
-    private Pale pale;
+    private PatternInterface patternInterface;
     private Grid grid;
-    private Integer index;
     private boolean active = false;
 
-    public Layer(Integer i) {
+    public Layer(PatternInterface.patternTypeEnum patternTypeEnum) {
 
-        this.index = i;
-        this.pale = new Pale();
+        switch (patternTypeEnum){
+            case BORDER :
+                this.patternInterface = new FlagPatternBorder();
+                break;
+            case CROSS :
+                this.patternInterface = new FlagPatternCross();
+                break;
+            case FESS :
+                this.patternInterface = new FlagPatternFess();
+                break;
+            case GREEK_CROSS :
+                this.patternInterface = new FlagPatternGreekCross();
+                break;
+            case PALE :
+                this.patternInterface = new FlagPatternPale();
+                break;
+            case PALL :
+                this.patternInterface = new FlagPatternPall();
+                break;
+            case QUADRISECTION :
+                this.patternInterface = new FlagPatternQuadrisection();
+                break;
+            case SALTIRE :
+                this.patternInterface = new FlagPatternSaltire();
+                break;
+            default:
+                throw new IllegalStateException();
+
+        }
+        this.patternInterface = new FlagPatternPale();
     }
 
     public void onDraw(Canvas canvas) {
 
-        if (pale != null)
-            pale.onDraw(canvas);
-
-    }
-
-    public Pale getPale() {
-        return pale;
-    }
-
-    public void setPale(Pale pale) {
-        this.pale = pale;
-    }
-
-    public Grid getGrid() {
-        return grid;
-    }
-
-    public void setGrid(Grid grid) {
-        this.grid = grid;
-    }
-
-    public Integer getIndex() {
-        return index;
-    }
-
-    public void setIndex(Integer index) {
-        this.index = index;
+        if (patternInterface != null)
+            patternInterface.onDraw(canvas);
     }
 
     public boolean isActive() {

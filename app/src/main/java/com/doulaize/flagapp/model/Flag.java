@@ -1,5 +1,7 @@
 package com.doulaize.flagapp.model;
 
+import com.doulaize.flagapp.patterns.PatternInterface;
+
 import android.graphics.Canvas;
 
 import java.util.ArrayList;
@@ -22,6 +24,16 @@ public class Flag {
 
     public List<Layer> getLayers() {
         return layers;
+    }
+
+    public void addLayer(PatternInterface.patternTypeEnum patternTypeEnum){
+
+        Layer l = new Layer(patternTypeEnum);
+        if (null == layers)
+            throw new IllegalStateException();
+
+        layers.add(l);
+
     }
 
     public void onDraw(Canvas canvas) {
