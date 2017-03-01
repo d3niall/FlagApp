@@ -24,36 +24,35 @@ public class Layer {
 
     public Layer(PatternInterface.patternTypeEnum patternTypeEnum) {
 
-        switch (patternTypeEnum){
-            case BORDER :
+        switch (patternTypeEnum) {
+            case BORDER:
                 this.patternInterface = new FlagPatternBorder();
                 break;
-            case CROSS :
+            case CROSS:
                 this.patternInterface = new FlagPatternCross();
                 break;
-            case FESS :
+            case FESS:
                 this.patternInterface = new FlagPatternFess();
                 break;
-            case GREEK_CROSS :
+            case GREEK_CROSS:
                 this.patternInterface = new FlagPatternGreekCross();
                 break;
-            case PALE :
+            case PALE:
                 this.patternInterface = new FlagPatternPale();
                 break;
-            case PALL :
+            case PALL:
                 this.patternInterface = new FlagPatternPall();
                 break;
-            case QUADRISECTION :
+            case QUADRISECTION:
                 this.patternInterface = new FlagPatternQuadrisection();
                 break;
-            case SALTIRE :
+            case SALTIRE:
                 this.patternInterface = new FlagPatternSaltire();
                 break;
             default:
                 throw new IllegalStateException();
 
         }
-        this.patternInterface = new FlagPatternPale();
     }
 
     public void onDraw(Canvas canvas) {

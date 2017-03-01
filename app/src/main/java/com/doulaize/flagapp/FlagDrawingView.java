@@ -14,7 +14,7 @@ import android.view.View;
 /**
  * Created by rdeleuze on 2/22/2017
  */
-public class SimpleDrawingView extends View {
+public class FlagDrawingView extends View {
     // setup initial color
     private final int paintColor = Color.BLACK;
     Flag mFlag;
@@ -23,7 +23,7 @@ public class SimpleDrawingView extends View {
     // stores next circle
     private Path path = new Path();
 
-    public SimpleDrawingView(Context context, AttributeSet attrs) {
+    public FlagDrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setFocusable(true);
         setFocusableInTouchMode(true);

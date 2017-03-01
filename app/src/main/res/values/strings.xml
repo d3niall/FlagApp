@@ -6,4 +6,11 @@
     <string name="drawer_label_gallery">Show Gallery</string>
     <string name="drawer_label_share">Share</string>
     <string name="text_select_new_layer_pattern">Select a pattern for the new layer</string>
+    <string name="text_delete_layer_dialog">Are you sure you want to delete this layer</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+
+    <string name="no_layer_info_label_1">Please click on</string>
+    <string name="no_layer_info_label_2">to add new layers to your flag</string>
 </resources>

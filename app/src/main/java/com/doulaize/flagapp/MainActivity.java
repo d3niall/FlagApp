@@ -1,12 +1,15 @@
 package com.doulaize.flagapp;
 
-import com.doulaize.flagapp.adapter.ToolbarAdapter;
+import com.doulaize.flagapp.adapter.FlagLayersAdapter;
+import com.doulaize.flagapp.listener.SelectFlagPatternListener;
 import com.doulaize.flagapp.model.Flag;
 import com.doulaize.flagapp.patterns.PatternInterface;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,12 +21,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SelectFlagPatternListener {
 
     Flag mFlag;
+    FlagLayersAdapter mFlagLayersAdapter;
+    FlagDrawingView mFlagDrawingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +44,30 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        SimpleDrawingView simpleDrawingView = (SimpleDrawingView) findViewById(R.id.drawing_area);
+        mFlagDrawingView = (FlagDrawingView) findViewById(R.id.drawing_area);
 
         Integer sizeOfTick = getResources().getDimensionPixelSize(R.dimen.tick_size);
 
-        mFlag = new Flag(simpleDrawingView.getWidth() - 2 * sizeOfTick, simpleDrawingView.getHeight() - 2 * sizeOfTick);
+        mFlag = new Flag(mFlagDrawingView.getWidth() - 2 * sizeOfTick, mFlagDrawingView.getHeight() - 2 * sizeOfTick);
 
-        ToolbarAdapter adapter = new ToolbarAdapter(this, R.layout.first_toolbar_item, mFlag.getLayers());
+        mFlagLayersAdapter = new FlagLayersAdapter(this, R.layout.first_toolbar_item, mFlag.getLayers());
 
         ListView listView = (ListView) findViewById(R.id.first_toolbar_list);
-        listView.setAdapter(adapter);
+        listView.setAdapter(mFlagLayersAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long arg) {
+                mFlag.setActiveLayer(position);
+                mFlagLayersAdapter.notifyDataSetChanged();
+                UpdateMainContentDisplay();
+            }
+        });
 
         View l = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_layer_button, null, false);
         listView.addFooterView(l);
 
-        simpleDrawingView.setFlag(mFlag);
+        mFlagDrawingView.setFlag(mFlag);
+        UpdateMainContentDisplay();
     }
 
 
@@ -98,8 +113,58 @@ public class MainActivity extends AppCompatActivity
         newFragment.setSelectorListener(this);
     }
 
+    public void onClickDeleteLayer(View v) {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setTitle(getResources().getString(R.string.text_delete_layer_dialog));
+
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        mFlag.deleteActiveLayer();
+                        mFlag.setActiveLayer(-1);
+                        mFlagLayersAdapter.notifyDataSetChanged();
+                        UpdateMainContentDisplay();
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+    }
+
+
     public void OnPatternSelected(PatternInterface.patternTypeEnum patternTypeEnum) {
 
         mFlag.addLayer(patternTypeEnum);
+        mFlagLayersAdapter.notifyDataSetChanged();
+        UpdateMainContentDisplay();
+    }
+
+
+    public void UpdateMainContentDisplay() {
+
+        if (mFlag.getLayersNumber() == 0) {
+
+            findViewById(R.id.right_toolbar_layer_dependent).setVisibility(View.INVISIBLE);
+            findViewById(R.id.second_toolbar).setVisibility(View.INVISIBLE);
+            findViewById(R.id.drawing_area).setVisibility(View.INVISIBLE);
+            findViewById(R.id.layout_info_no_layers).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.right_toolbar_layer_dependent).setVisibility(View.VISIBLE);
+            findViewById(R.id.second_toolbar).setVisibility(View.VISIBLE);
+            findViewById(R.id.drawing_area).setVisibility(View.VISIBLE);
+            findViewById(R.id.layout_info_no_layers).setVisibility(View.INVISIBLE);
+        }
+
+        mFlagDrawingView.invalidate();
     }
 }

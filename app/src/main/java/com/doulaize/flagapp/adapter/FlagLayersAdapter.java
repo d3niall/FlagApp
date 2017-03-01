@@ -15,13 +15,9 @@ import java.util.List;
  * Created by rdeleuze on 2/21/2017
  */
 
-public class ToolbarAdapter extends ArrayAdapter<Layer> {
+public class FlagLayersAdapter extends ArrayAdapter<Layer> {
 
-    public ToolbarAdapter(Context context, int textViewResourceId) {
-        super(context, textViewResourceId);
-    }
-
-    public ToolbarAdapter(Context context, int resource, List<Layer> items) {
+    public FlagLayersAdapter(Context context, int resource, List<Layer> items) {
         super(context, resource, items);
     }
 
@@ -46,5 +42,6 @@ public class ToolbarAdapter extends ArrayAdapter<Layer> {
 
         return v;
     }
+
 
 }

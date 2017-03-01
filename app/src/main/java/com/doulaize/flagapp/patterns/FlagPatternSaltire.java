@@ -8,12 +8,12 @@ import android.graphics.Canvas;
 public class FlagPatternSaltire implements PatternInterface {
 
     @Override
-    public void onDraw(Canvas canvas){
+    public void onDraw(Canvas canvas) {
 
     }
 
     @Override
-    public patternTypeEnum getPatternType(){
+    public patternTypeEnum getPatternType() {
         return patternTypeEnum.SALTIRE;
     }
 }
