@@ -1,16 +1,40 @@
 package com.doulaize.flagapp.patterns;
 
+import com.doulaize.flagapp.model.Ratio;
+
 import android.graphics.Canvas;
 
 /**
  * Created by rdeleuze on 3/1/2017
  */
 
-public interface PatternInterface {
+public abstract class PatternInterface {
 
-    public patternTypeEnum getPatternType();
+    Ratio mRatio;
 
-    public void onDraw(Canvas canvas);
+    abstract public patternTypeEnum getPatternType();
+
+    abstract public void onDraw(Canvas canvas, Integer horizontalOffset, Integer verticalOffset, Integer maxWidth, Integer maxHeight);
+
+    public boolean isButtonAddAllowed() {
+        return false;
+    }
+
+    public boolean isButtonRemoveAllowed() {
+        return false;
+    }
+
+    public Ratio getRatio() {
+        return mRatio;
+    }
+
+    public void setRatio(Ratio ratio) {
+        mRatio = ratio;
+    }
+
+    abstract public void buttonAddPressed();
+
+    abstract public void buttonRemovePressed();
 
     public enum patternTypeEnum {
         BORDER, CROSS, FESS, GREEK_CROSS, PALE, PALL, QUADRISECTION, SALTIRE

@@ -1,10 +1,9 @@
 package com.doulaize.flagapp.patterns;
 
-import com.doulaize.flagapp.exception.CoordinateException;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,74 +11,34 @@ import java.util.List;
 /**
  * Created by rdeleuze on 2/16/2017
  */
-public class FlagPatternPale implements PatternInterface {
+public class FlagPatternPale extends PatternInterface {
 
+    private List<Float> mTopCoordinates;
+    private List<Float> mBottomCoordinates;
+    private List<Color> mColors;
 
-    // setup initial color
-    private final int paintColor = Color.RED;
-    // defines paint and canvas
-    private Paint drawPaint;
-
-    private Integer mMinCoordinate;
-    private Integer mMaxCoordinate;
-    private List<Integer> mCoordinates;
-    private List<Integer> mSecondaryCoordinates;
-    private Boolean isRegular;
-
+    private Paint paint = new Paint();
 
     public FlagPatternPale() {
+        mTopCoordinates = new ArrayList<>();
+        mBottomCoordinates = new ArrayList<>();
+        mColors = new ArrayList<>();
 
-    }
-
-    public FlagPatternPale(Integer aMin, Integer aMax) {
-
-        mMinCoordinate = aMin;
-        mMaxCoordinate = aMax;
-        mCoordinates = new ArrayList<Integer>();
-    }
-
-    void addPoint(Integer mNewCoordinate) {
-
-        if (mNewCoordinate > mMaxCoordinate || mNewCoordinate < mMinCoordinate) {
-            throw new CoordinateException(mNewCoordinate, mMinCoordinate, mMaxCoordinate);
-        }
-
-        int position;
-        for (position = 0; position < mCoordinates.size(); position++) {
-            if (mCoordinates.get(position) > mNewCoordinate)
-                break;
-        }
-
-        mCoordinates.add(position, mNewCoordinate);
-
-    }
-
-    void addPoint(boolean evenOutResult) {
-
-        Integer newCoord = (Integer) (((mCoordinates.size() > 0 ? mCoordinates.get(mCoordinates.size() - 1) : mMinCoordinate) + mMaxCoordinate) / 2);
-        mCoordinates.add(newCoord);
-
-        if (evenOutResult)
-            makeRegular();
-
-    }
-
-    void makeRegular() {
-        Integer step = (Integer) ((mMaxCoordinate - mMinCoordinate) / (1 + mCoordinates.size()));
-        for (int i = 0; i < mCoordinates.size(); i++) {
-            mCoordinates.set(i, (i + 1) * step);
+        for (int i = 1; i < 3; i++) {
+            mTopCoordinates.add((float) (i * 100. / 3D));
+            mBottomCoordinates.add((float) (i * 100. / 3D));
         }
     }
 
     private void setupPaint() {
-        // Setup paint with color and stroke styles
-        drawPaint = new Paint();
-        drawPaint.setColor(paintColor);
-        drawPaint.setAntiAlias(true);
-        drawPaint.setStrokeWidth(5);
-        drawPaint.setStyle(Paint.Style.STROKE);
-        drawPaint.setStrokeJoin(Paint.Join.ROUND);
-        drawPaint.setStrokeCap(Paint.Cap.ROUND);
+//        // Setup paint with color and stroke styles
+//        drawPaint = new Paint();
+//        drawPaint.setColor(paintColor);
+//        drawPaint.setAntiAlias(true);
+//        drawPaint.setStrokeWidth(5);
+//        drawPaint.setStyle(Paint.Style.STROKE);
+//        drawPaint.setStrokeJoin(Paint.Join.ROUND);
+//        drawPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
 
@@ -89,11 +48,104 @@ public class FlagPatternPale implements PatternInterface {
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
-        if (drawPaint == null)
-            setupPaint();
+    public void onDraw(Canvas canvas, Integer horizontalOffset, Integer verticalOffset, Integer maxWidth, Integer maxHeight) {
 
-        canvas.drawCircle(20, 20, 15, drawPaint);
+        if (null == mTopCoordinates || null == mBottomCoordinates || mTopCoordinates.size() != mBottomCoordinates.size())
+            throw new IllegalStateException();
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.MAGENTA);
+        float newWidth = 0;
+        float newHeight = 0;
+
+        if ((maxWidth - 2 * horizontalOffset) * mRatio.getNS() / mRatio.getEW() < (maxHeight - 2 * verticalOffset)) {
+            newWidth = maxWidth - 2 * horizontalOffset;
+            newHeight = (maxWidth - 2 * horizontalOffset) * mRatio.getNS() / mRatio.getEW();
+        } else {
+            newWidth = (maxHeight - 2 * verticalOffset) * mRatio.getEW() / mRatio.getNS();
+            newHeight = maxHeight - 2 * verticalOffset;
+        }
+        float newHorizontalOffset = (maxWidth - newWidth) / 2;
+        float newVerticalOffset = (maxHeight - newHeight) / 2;
+
+        paint.setColor(Color.BLACK);
+
+        float yTop = newVerticalOffset;
+        float yBottom = newVerticalOffset + newHeight;
+
+        float xTop = newHorizontalOffset;
+        float xBottom = newHorizontalOffset;
+
+        for (int i = 0; i < mTopCoordinates.size(); ++i) {
+
+            Path path = new Path();
+            path.moveTo(xTop, yTop);
+            path.lineTo(newHorizontalOffset + mTopCoordinates.get(i) * newWidth / 100, yTop);
+            path.lineTo(newHorizontalOffset + mBottomCoordinates.get(i) * newWidth / 100, yBottom);
+            path.lineTo(xBottom, yBottom);
+            path.lineTo(xTop, yTop);
+
+            canvas.drawPath(path, paint);
+
+            xTop = newHorizontalOffset + mTopCoordinates.get(i) * newWidth / 100;
+            xBottom = newHorizontalOffset + mBottomCoordinates.get(i) * newWidth / 100;
+        }
+
+        Path path = new Path();
+        path.moveTo(xTop, yTop);
+        path.lineTo(newHorizontalOffset + newWidth, yTop);
+        path.lineTo(newHorizontalOffset + newWidth, yBottom);
+        path.lineTo(xBottom, yBottom);
+        path.lineTo(xTop, yTop);
+
+        canvas.drawPath(path, paint);
     }
 
+    @Override
+    public boolean isButtonAddAllowed() {
+        return true;
+    }
+
+    @Override
+    public boolean isButtonRemoveAllowed() {
+        return true;
+    }
+
+    @Override
+    public void buttonAddPressed() {
+
+        if (null == mTopCoordinates || null == mBottomCoordinates || mTopCoordinates.size() != mBottomCoordinates.size())
+            throw new IllegalStateException();
+
+        float r = (mTopCoordinates.size() + 1.0f) * 1.0f / (mTopCoordinates.size() + 2.0f);
+
+        for (int i = 0; i < mTopCoordinates.size(); i++) {
+
+            mTopCoordinates.set(i, mTopCoordinates.get(i) * r);
+            mBottomCoordinates.set(i, mBottomCoordinates.get(i) * r);
+        }
+
+        mTopCoordinates.add(100 * r);
+        mBottomCoordinates.add(100 * r);
+    }
+
+    @Override
+    public void buttonRemovePressed() {
+
+        if (null == mTopCoordinates || null == mBottomCoordinates || mTopCoordinates.size() != mBottomCoordinates.size())
+            throw new IllegalStateException();
+
+        float r = (mTopCoordinates.size() + 2.0f) / (mTopCoordinates.size() + 1.0f);
+
+        for (int i = 0; i < mTopCoordinates.size() - 1; i++) {
+
+            mTopCoordinates.set(i, mTopCoordinates.get(i) * r);
+            mBottomCoordinates.set(i, mBottomCoordinates.get(i) * r);
+        }
+
+        if (mTopCoordinates.size() > 0) {
+            mTopCoordinates.remove(mTopCoordinates.size() - 1);
+            mBottomCoordinates.remove(mBottomCoordinates.size() - 1);
+        }
+    }
 }

@@ -48,8 +48,10 @@ public class MainActivity extends AppCompatActivity
 
         Integer sizeOfTick = getResources().getDimensionPixelSize(R.dimen.tick_size);
 
-        mFlag = new Flag(mFlagDrawingView.getWidth() - 2 * sizeOfTick, mFlagDrawingView.getHeight() - 2 * sizeOfTick);
+        mFlagDrawingView.setHorizontalOffset(sizeOfTick);
+        mFlagDrawingView.setVerticalOffset(sizeOfTick);
 
+        mFlag = new Flag();
         mFlagLayersAdapter = new FlagLayersAdapter(this, R.layout.first_toolbar_item, mFlag.getLayers());
 
         ListView listView = (ListView) findViewById(R.id.first_toolbar_list);
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -100,6 +103,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
     public void onClickAddLayer(View v) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment prev = getFragmentManager().findFragmentByTag("dialog");
@@ -109,9 +113,10 @@ public class MainActivity extends AppCompatActivity
         ft.addToBackStack(null);
         NewLayerDialogFragment newFragment = NewLayerDialogFragment.newInstance();
 
-        newFragment.show(ft, "");
+        newFragment.show(ft, "dialog");
         newFragment.setSelectorListener(this);
     }
+
 
     public void onClickDeleteLayer(View v) {
 
@@ -142,6 +147,20 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public void onClickButtonAdd(View v) {
+
+        mFlag.getActiveLayer().getPatternInterface().buttonAddPressed();
+        UpdateMainContentDisplay();
+    }
+
+
+    public void onClickButtonRemove(View v) {
+
+        mFlag.getActiveLayer().getPatternInterface().buttonRemovePressed();
+        UpdateMainContentDisplay();
+    }
+
+
     public void OnPatternSelected(PatternInterface.patternTypeEnum patternTypeEnum) {
 
         mFlag.addLayer(patternTypeEnum);
@@ -163,6 +182,9 @@ public class MainActivity extends AppCompatActivity
             findViewById(R.id.second_toolbar).setVisibility(View.VISIBLE);
             findViewById(R.id.drawing_area).setVisibility(View.VISIBLE);
             findViewById(R.id.layout_info_no_layers).setVisibility(View.INVISIBLE);
+
+            findViewById(R.id.button_pattern_add).setVisibility(mFlag.getActiveLayer().getPatternInterface().isButtonAddAllowed() ? View.VISIBLE : View.GONE);
+            findViewById(R.id.button_pattern_remove).setVisibility(mFlag.getActiveLayer().getPatternInterface().isButtonRemoveAllowed() ? View.VISIBLE : View.GONE);
         }
 
         mFlagDrawingView.invalidate();

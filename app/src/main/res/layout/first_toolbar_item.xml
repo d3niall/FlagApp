@@ -8,12 +8,13 @@
         android:background="@drawable/ic_tab_dark">
 
     <ImageView
+            android:id="@+id/image_layer"
             android:contentDescription="@string/first_toolbar_item_description"
             android:layout_marginTop="@dimen/side_toolbar_item_image_margin"
             android:layout_marginBottom="@dimen/side_toolbar_item_image_margin"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_add_circle"
+            android:layout_height="@dimen/layer_tab_image_height"
+            android:src="@drawable/pattern_border"
     />
 
 </LinearLayout>

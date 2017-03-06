@@ -120,13 +120,17 @@
                         android:src="@drawable/ic_invert_ver"/>
 
                 <ImageButton
+                        android:id="@+id/button_pattern_add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_add_circle"/>
+                        android:src="@drawable/ic_add_circle"
+                        android:onClick="onClickButtonAdd"/>
                 <ImageButton
+                        android:id="@+id/button_pattern_remove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_remove_circle"/>
+                        android:src="@drawable/ic_remove_circle"
+                        android:onClick="onClickButtonRemove"/>
 
             </LinearLayout>
         </ScrollView>

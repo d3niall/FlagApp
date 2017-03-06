@@ -4,10 +4,12 @@ import com.doulaize.flagapp.R;
 import com.doulaize.flagapp.model.Layer;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -33,6 +35,15 @@ public class FlagLayersAdapter extends ArrayAdapter<Layer> {
         }
 
         Layer layer = getItem(position);
+
+        String imageName = "pattern_" + layer.getPatternInterface().getPatternType().name().toLowerCase();
+
+        ImageView imageView = (ImageView) v.findViewById(R.id.image_layer);
+
+        Resources resources = getContext().getResources();
+        final int resourceId = resources.getIdentifier(imageName, "drawable", getContext().getPackageName());
+
+        imageView.setImageResource(resourceId);
 
         if (null != layer && layer.isActive()) {
             v.setBackgroundResource(R.drawable.ic_tab_light);

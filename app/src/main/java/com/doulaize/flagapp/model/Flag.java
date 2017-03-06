@@ -17,10 +17,9 @@ public class Flag {
     private List<Layer> layers;
     private Ratio ratio;
 
-
-    public Flag(int viewWidth, int viewHeight) {
+    public Flag() {
         layers = new ArrayList<>();
-        ratio = new Ratio(viewWidth, viewHeight);
+        ratio = new Ratio();
     }
 
     public List<Layer> getLayers() {
@@ -38,7 +37,29 @@ public class Flag {
         }
 
         l.setActive(true);
+        l.setRatio(ratio);
         layers.add(l);
+    }
+
+    public void deleteActiveLayer() {
+
+        ListIterator<Layer> iter = layers.listIterator();
+        while (iter.hasNext()) {
+            if (iter.next().isActive()) {
+                iter.remove();
+            }
+        }
+    }
+
+    public Layer getActiveLayer() {
+
+        for (int i = 0; i < layers.size(); i++) {
+
+            if (layers.get(i).isActive()) {
+                return layers.get(i);
+            }
+        }
+        return null;
     }
 
     public void setActiveLayer(int layerIndex) {
@@ -54,16 +75,6 @@ public class Flag {
         }
     }
 
-    public void deleteActiveLayer() {
-
-        ListIterator<Layer> iter = layers.listIterator();
-        while (iter.hasNext()) {
-            if (iter.next().isActive()) {
-                iter.remove();
-            }
-        }
-    }
-
     public int getLayersNumber() {
 
         if (layers == null)
@@ -71,12 +82,14 @@ public class Flag {
         return getLayers().size();
     }
 
-    public void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas, Integer horizontalOffset, Integer verticalOffset, Integer maxWidth, Integer maxHeight) {
         if (layers == null) {
             return;
         }
+
+
         for (int i = 0; i < layers.size(); i++)
-            layers.get(i).onDraw(canvas);
+            layers.get(i).onDraw(canvas, horizontalOffset, verticalOffset, maxWidth, maxHeight);
     }
 
     public Ratio getRatio() {

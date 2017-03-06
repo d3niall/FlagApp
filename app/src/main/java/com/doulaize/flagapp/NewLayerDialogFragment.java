@@ -23,6 +23,7 @@ import static com.doulaize.flagapp.patterns.PatternInterface.patternTypeEnum.SAL
  */
 
 public class NewLayerDialogFragment extends DialogFragment {
+
     SelectFlagPatternListener selectFlagPatternListener;
 
     static NewLayerDialogFragment newInstance() {

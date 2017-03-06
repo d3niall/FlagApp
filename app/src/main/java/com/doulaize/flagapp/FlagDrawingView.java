@@ -5,73 +5,65 @@ import com.doulaize.flagapp.model.Flag;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 
 /**
  * Created by rdeleuze on 2/22/2017
  */
 public class FlagDrawingView extends View {
-    // setup initial color
+
     private final int paintColor = Color.BLACK;
+
     Flag mFlag;
-    // defines paint and canvas
-    private Paint drawPaint;
-    // stores next circle
-    private Path path = new Path();
+
+    Integer mHorizontalOffset = 0;
+    Integer mVerticalOffset = 0;
 
     public FlagDrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setFocusable(true);
         setFocusableInTouchMode(true);
-        setupPaint();
     }
 
     public void setFlag(Flag flag) {
         mFlag = flag;
     }
 
-    private void setupPaint() {
-        // Setup paint with color and stroke styles
-        drawPaint = new Paint();
-        drawPaint.setColor(paintColor);
-        drawPaint.setAntiAlias(true);
-        drawPaint.setStrokeWidth(5);
-        drawPaint.setStyle(Paint.Style.STROKE);
-        drawPaint.setStrokeJoin(Paint.Join.ROUND);
-        drawPaint.setStrokeCap(Paint.Cap.ROUND);
-    }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawPath(path, drawPaint);
         if (mFlag == null)
             throw new IllegalStateException();
 
-        mFlag.onDraw(canvas);
+        mFlag.onDraw(canvas, mHorizontalOffset, mVerticalOffset, getWidth(), getHeight());
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        float pointX = event.getX();
-        float pointY = event.getY();
-        // Checks for the event that occurs
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                path.moveTo(pointX, pointY);
-                return true;
-            case MotionEvent.ACTION_MOVE:
-                path.lineTo(pointX, pointY);
-                break;
-            default:
-                return false;
-        }
-        // Force a view to draw again
-        postInvalidate();
-        return true;
+    public void setHorizontalOffset(Integer horizontalOffset) {
+        mHorizontalOffset = horizontalOffset;
     }
+
+    public void setVerticalOffset(Integer verticalOffset) {
+        mVerticalOffset = verticalOffset;
+    }
+
+    //    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        float pointX = event.getX();
+//        float pointY = event.getY();
+//        // Checks for the event that occurs
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                path.moveTo(pointX, pointY);
+//                return true;
+//            case MotionEvent.ACTION_MOVE:
+//                path.lineTo(pointX, pointY);
+//                break;
+//            default:
+//                return false;
+//        }
+//        // Force a view to draw again
+//        postInvalidate();
+//        return true;
+//    }
 }

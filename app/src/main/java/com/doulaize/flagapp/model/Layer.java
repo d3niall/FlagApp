@@ -13,52 +13,80 @@ import com.doulaize.flagapp.patterns.PatternInterface;
 import android.graphics.Canvas;
 
 /**
- * Created by rdeleuze on 2/16/17.
+ * Created by rdeleuze on 2/16/2017
  */
 
 public class Layer {
 
-    private PatternInterface patternInterface;
-    private Grid grid;
+    private PatternInterface mPatternInterface;
+    private Grid mGrid;
+    private Ratio mRatio;
     private boolean active = false;
 
     public Layer(PatternInterface.patternTypeEnum patternTypeEnum) {
 
         switch (patternTypeEnum) {
             case BORDER:
-                this.patternInterface = new FlagPatternBorder();
+                this.mPatternInterface = new FlagPatternBorder();
                 break;
             case CROSS:
-                this.patternInterface = new FlagPatternCross();
+                this.mPatternInterface = new FlagPatternCross();
                 break;
             case FESS:
-                this.patternInterface = new FlagPatternFess();
+                this.mPatternInterface = new FlagPatternFess();
                 break;
             case GREEK_CROSS:
-                this.patternInterface = new FlagPatternGreekCross();
+                this.mPatternInterface = new FlagPatternGreekCross();
                 break;
             case PALE:
-                this.patternInterface = new FlagPatternPale();
+                this.mPatternInterface = new FlagPatternPale();
                 break;
             case PALL:
-                this.patternInterface = new FlagPatternPall();
+                this.mPatternInterface = new FlagPatternPall();
                 break;
             case QUADRISECTION:
-                this.patternInterface = new FlagPatternQuadrisection();
+                this.mPatternInterface = new FlagPatternQuadrisection();
                 break;
             case SALTIRE:
-                this.patternInterface = new FlagPatternSaltire();
+                this.mPatternInterface = new FlagPatternSaltire();
                 break;
             default:
                 throw new IllegalStateException();
 
         }
+
+        this.mPatternInterface.setRatio(mRatio);
     }
 
-    public void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas, Integer horizontalOffset, Integer verticalOffset, Integer maxWidth, Integer maxHeight) {
 
-        if (patternInterface != null)
-            patternInterface.onDraw(canvas);
+        if (mPatternInterface != null)
+            mPatternInterface.onDraw(canvas, horizontalOffset, verticalOffset, maxWidth, maxHeight);
+    }
+
+    public PatternInterface getPatternInterface() {
+        return mPatternInterface;
+    }
+
+    public void setPatternInterface(PatternInterface patternInterface) {
+        mPatternInterface = patternInterface;
+    }
+
+    public Grid getGrid() {
+        return mGrid;
+    }
+
+    public void setGrid(Grid grid) {
+        mGrid = grid;
+    }
+
+    public Ratio getRatio() {
+        return mRatio;
+    }
+
+    public void setRatio(Ratio ratio) {
+        mRatio = ratio;
+        mPatternInterface.setRatio(ratio);
     }
 
     public boolean isActive() {
