@@ -28,7 +28,15 @@ public class Ratio {
         return EW;
     }
 
+    public void setEW(Integer EW) {
+        this.EW = EW;
+    }
+
     public Integer getNS() {
         return NS;
+    }
+
+    public void setNS(Integer NS) {
+        this.NS = NS;
     }
 }

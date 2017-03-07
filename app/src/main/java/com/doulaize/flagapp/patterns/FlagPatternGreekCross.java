@@ -14,7 +14,7 @@ public class FlagPatternGreekCross extends PatternInterface {
 
     @Override
     public patternTypeEnum getPatternType() {
-        return patternTypeEnum.GREEK_CROSS;
+        return patternTypeEnum.GREEKCROSS;
     }
 
     @Override

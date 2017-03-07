@@ -87,7 +87,6 @@ public class Flag {
             return;
         }
 
-
         for (int i = 0; i < layers.size(); i++)
             layers.get(i).onDraw(canvas, horizontalOffset, verticalOffset, maxWidth, maxHeight);
     }
@@ -96,7 +95,14 @@ public class Flag {
         return ratio;
     }
 
-    public void setRatio(Ratio ratio) {
-        this.ratio = ratio;
+    public void setNewRatio(Integer ew, Integer ns) {
+        if (layers == null || ratio == null)
+            throw new IllegalStateException();
+
+        ratio.setNS(ns);
+        ratio.setEW(ew);
+
+        for (int i = 0; i < layers.size(); i++)
+            layers.get(i).setRatio(ratio);
     }
 }

@@ -5,11 +5,19 @@
     <string name="drawer_label_new_flag">New Flag</string>
     <string name="drawer_label_gallery">Show Gallery</string>
     <string name="drawer_label_share">Share</string>
-    <string name="text_select_new_layer_pattern">Select a pattern for the new layer</string>
-    <string name="text_delete_layer_dialog">Are you sure you want to delete this layer</string>
+    <string name="new_layer_dialog_title_select_pattern">Select a pattern for the new layer</string>
+    <string name="delete_layer_dialog_confirmation_text">Are you sure you want to delete this layer</string>
+    <string name="change_ratio_dialog_title">Change Flag Ratio</string>
+    <string name="change_ratio_values_separator">:</string>
+
+    <string name="change_ratio_warning_too_big">Flag too flat!</string>
+    <string name="change_ratio_warning_too_small">Flag too narrow!</string>
+
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
     <string name="no_layer_info_label_1">Please click on</string>
     <string name="no_layer_info_label_2">to add new layers to your flag</string>

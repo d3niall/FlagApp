@@ -37,6 +37,6 @@ public abstract class PatternInterface {
     abstract public void buttonRemovePressed();
 
     public enum patternTypeEnum {
-        BORDER, CROSS, FESS, GREEK_CROSS, PALE, PALL, QUADRISECTION, SALTIRE
+        BORDER, CROSS, FESS, GREEKCROSS, PALE, PALL, QUADRISECTION, SALTIRE
     }
 }

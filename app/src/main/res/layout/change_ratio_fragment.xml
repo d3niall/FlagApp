@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foregroundGravity="center">
+
+
+    <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <Button
+                android:text="@string/ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" android:id="@+id/ratio_dialog_button_ok"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"/>
+        <Button
+                android:text="@string/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/ratio_dialog_button_ok" android:id="@+id/ratio_dialog_button_cancel"
+                android:layout_marginBottom="5dp"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true" android:layout_alignParentStart="true"
+        android:gravity="center"
+                android:layout_above="@+id/ratio_dialog_button_ok"
+        android:weightSum="7">
+
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" android:layout_weight="3">
+
+                <TextView
+                        style="@style/Ratio_display"
+                        android:id="@+id/number_pickers_divider"
+                        android:text="@string/change_ratio_values_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                />
+                <NumberPicker
+                        android:text="16"
+                        android:background="@android:color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/ratio_dialog_number_picker_left"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:layout_toStartOf="@id/number_pickers_divider"
+                        android:layout_centerVertical="true"
+
+                style="@style/Ratio_display"
+                android:gravity="right"/>
+
+                <NumberPicker
+                style="@style/Ratio_display"
+                        android:background="@android:color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                        android:ems="10"
+                        android:id="@+id/ratio_dialog_number_picker_right"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/number_pickers_divider" />
+             </RelativeLayout>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="=" android:textAlignment="center"
+                      style="@style/Ratio_display" android:layout_weight="1" android:layout_gravity="center_vertical"/>
+            <RelativeLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="3">
+                <com.doulaize.flagapp.views.RatioDialogFlagDrawingView android:layout_width="match_parent"
+                                                                       android:layout_height="match_parent"
+                                                                       android:layout_alignParentBottom="true"
+                                                                       android:layout_alignParentTop="true"
+                                                                       android:layout_alignParentStart="true"
+                                                                       android:layout_alignParentEnd="true"
+                                                                       android:id="@+id/ratio_dialog_flag_drawing_view"/>
+                <TextView
+                        style="@style/Ratio_display"
+                        android:text="16/9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/ratio_dialog_summary_text"
+                        android:layout_centerInParent="true"
+                />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ratio_dialog_summary_text"
+                        android:textColor="@color/colorAccent"
+                        android:layout_centerHorizontal="true" android:id="@+id/change_ratio_warning"/>
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

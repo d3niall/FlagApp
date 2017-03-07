@@ -1,9 +1,11 @@
 package com.doulaize.flagapp;
 
 import com.doulaize.flagapp.adapter.FlagLayersAdapter;
+import com.doulaize.flagapp.listener.NewRatioListener;
 import com.doulaize.flagapp.listener.SelectFlagPatternListener;
 import com.doulaize.flagapp.model.Flag;
 import com.doulaize.flagapp.patterns.PatternInterface;
+import com.doulaize.flagapp.views.FlagDrawingView;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -25,7 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, SelectFlagPatternListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SelectFlagPatternListener, NewRatioListener {
 
     Flag mFlag;
     FlagLayersAdapter mFlagLayersAdapter;
@@ -104,16 +106,30 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public void onClickChangeRatio(View v) {
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag(ChangeRatioDialogFragment.FRAGMENT_TRANSACTION_ID);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        ChangeRatioDialogFragment newFragment = ChangeRatioDialogFragment.newInstance();
+        newFragment.setInitialRatioValue(mFlag.getRatio().getEW(), mFlag.getRatio().getNS());
+        newFragment.show(ft, ChangeRatioDialogFragment.FRAGMENT_TRANSACTION_ID);
+        newFragment.setNewRatioListener(this);
+    }
+
     public void onClickAddLayer(View v) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        Fragment prev = getFragmentManager().findFragmentByTag(NewLayerDialogFragment.FRAGMENT_TRANSACTION_ID);
         if (prev != null) {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
         NewLayerDialogFragment newFragment = NewLayerDialogFragment.newInstance();
 
-        newFragment.show(ft, "dialog");
+        newFragment.show(ft, NewLayerDialogFragment.FRAGMENT_TRANSACTION_ID);
         newFragment.setSelectorListener(this);
     }
 
@@ -122,7 +138,7 @@ public class MainActivity extends AppCompatActivity
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-        alertDialogBuilder.setTitle(getResources().getString(R.string.text_delete_layer_dialog));
+        alertDialogBuilder.setTitle(getResources().getString(R.string.delete_layer_dialog_confirmation_text));
 
         alertDialogBuilder
                 .setCancelable(false)
@@ -165,6 +181,12 @@ public class MainActivity extends AppCompatActivity
 
         mFlag.addLayer(patternTypeEnum);
         mFlagLayersAdapter.notifyDataSetChanged();
+        UpdateMainContentDisplay();
+    }
+
+    public void OnNewRatioSelected(Integer EW, Integer NS) {
+
+        mFlag.setNewRatio(EW, NS);
         UpdateMainContentDisplay();
     }
 

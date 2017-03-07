@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import static com.doulaize.flagapp.patterns.PatternInterface.patternTypeEnum.BORDER;
 import static com.doulaize.flagapp.patterns.PatternInterface.patternTypeEnum.CROSS;
 import static com.doulaize.flagapp.patterns.PatternInterface.patternTypeEnum.FESS;
-import static com.doulaize.flagapp.patterns.PatternInterface.patternTypeEnum.GREEK_CROSS;
+import static com.doulaize.flagapp.patterns.PatternInterface.patternTypeEnum.GREEKCROSS;
 import static com.doulaize.flagapp.patterns.PatternInterface.patternTypeEnum.PALE;
 import static com.doulaize.flagapp.patterns.PatternInterface.patternTypeEnum.PALL;
 import static com.doulaize.flagapp.patterns.PatternInterface.patternTypeEnum.QUADRISECTION;
@@ -23,6 +23,8 @@ import static com.doulaize.flagapp.patterns.PatternInterface.patternTypeEnum.SAL
  */
 
 public class NewLayerDialogFragment extends DialogFragment {
+
+    public static String FRAGMENT_TRANSACTION_ID = "NewLayerDialogFragment";
 
     SelectFlagPatternListener selectFlagPatternListener;
 
@@ -39,7 +41,7 @@ public class NewLayerDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        getDialog().setTitle(getResources().getString(R.string.text_select_new_layer_pattern));
+        getDialog().setTitle(getResources().getString(R.string.new_layer_dialog_title_select_pattern));
         View v = inflater.inflate(R.layout.add_layer_fragment, container, false);
 
         ImageView imageViewBorder = (ImageView) v.findViewById(R.id.pattern_border);
@@ -76,7 +78,7 @@ public class NewLayerDialogFragment extends DialogFragment {
         imageViewGreekCross.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if (selectFlagPatternListener != null) {
-                    selectFlagPatternListener.OnPatternSelected(GREEK_CROSS);
+                    selectFlagPatternListener.OnPatternSelected(GREEKCROSS);
                 }
                 dismiss();
             }

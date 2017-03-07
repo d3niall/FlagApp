@@ -35,7 +35,7 @@ public class Layer {
             case FESS:
                 this.mPatternInterface = new FlagPatternFess();
                 break;
-            case GREEK_CROSS:
+            case GREEKCROSS:
                 this.mPatternInterface = new FlagPatternGreekCross();
                 break;
             case PALE:

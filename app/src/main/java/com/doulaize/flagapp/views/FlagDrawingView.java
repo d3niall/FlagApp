@@ -1,10 +1,9 @@
-package com.doulaize.flagapp;
+package com.doulaize.flagapp.views;
 
 import com.doulaize.flagapp.model.Flag;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -12,8 +11,6 @@ import android.view.View;
  * Created by rdeleuze on 2/22/2017
  */
 public class FlagDrawingView extends View {
-
-    private final int paintColor = Color.BLACK;
 
     Flag mFlag;
 

@@ -30,14 +30,16 @@
                     android:contentDescription="@string/ratio_button_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_menu_settings"/>
+                    android:src="@drawable/ic_menu_settings"
+                    android:onClick="onClickChangeRatio"/>
         </LinearLayout>
 
         <ListView
                 android:id="@+id/first_toolbar_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true">
+                android:drawSelectorOnTop="true"
+                android:scrollbars="none">
 
         </ListView>
 
@@ -138,7 +140,7 @@
 
     </RelativeLayout>
 
-    <com.doulaize.flagapp.FlagDrawingView
+    <com.doulaize.flagapp.views.FlagDrawingView
             android:id="@+id/drawing_area"
             android:background="#fed"
             android:layout_width="wrap_content"
