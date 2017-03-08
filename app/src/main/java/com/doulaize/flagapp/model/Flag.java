@@ -3,6 +3,7 @@ package com.doulaize.flagapp.model;
 import com.doulaize.flagapp.patterns.PatternInterface;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,11 @@ import java.util.ListIterator;
 public class Flag {
 
     private List<Layer> layers;
+
+    ;
     private Ratio ratio;
+    private APP_STATE fmsState = APP_STATE.FLAG_FSM_STATE_IDLE;
+    private int colorSelected = Color.RED;
 
     public Flag() {
         layers = new ArrayList<>();
@@ -105,4 +110,22 @@ public class Flag {
         for (int i = 0; i < layers.size(); i++)
             layers.get(i).setRatio(ratio);
     }
+
+    public APP_STATE getFmsState() {
+        return fmsState;
+    }
+
+    public void setFmsState(APP_STATE fmsState) {
+        this.fmsState = fmsState;
+    }
+
+    public int getColorSelected() {
+        return colorSelected;
+    }
+
+    public void setColorSelected(int colorSelected) {
+        this.colorSelected = colorSelected;
+    }
+
+    static public enum APP_STATE {FLAG_FSM_STATE_IDLE, FLAG_FSM_STATE_COLOR_SELECTED}
 }

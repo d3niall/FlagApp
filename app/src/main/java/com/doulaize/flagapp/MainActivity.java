@@ -1,11 +1,14 @@
 package com.doulaize.flagapp;
 
 import com.doulaize.flagapp.adapter.FlagLayersAdapter;
+import com.doulaize.flagapp.common.Constants;
 import com.doulaize.flagapp.listener.NewRatioListener;
 import com.doulaize.flagapp.listener.SelectFlagPatternListener;
 import com.doulaize.flagapp.model.Flag;
 import com.doulaize.flagapp.patterns.PatternInterface;
 import com.doulaize.flagapp.views.FlagDrawingView;
+import com.jrummyapps.android.colorpicker.ColorPickerDialog;
+import com.jrummyapps.android.colorpicker.ColorPickerDialogListener;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -13,7 +16,10 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
+import android.graphics.ColorFilter;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,14 +30,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, SelectFlagPatternListener, NewRatioListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SelectFlagPatternListener, NewRatioListener, ColorPickerDialogListener {
 
     Flag mFlag;
     FlagLayersAdapter mFlagLayersAdapter;
     FlagDrawingView mFlagDrawingView;
+    ImageButton mButtonColorSelection;
+    View mButtonColorSelectionBackground;
+    ColorFilter mDefaultColorFilter;
+    int[] default_flag_colors = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +83,22 @@ public class MainActivity extends AppCompatActivity
 
         mFlagDrawingView.setFlag(mFlag);
         UpdateMainContentDisplay();
+
+        mButtonColorSelection = (ImageButton) findViewById(R.id.image_button_color_selection);
+        mButtonColorSelectionBackground = findViewById(R.id.image_button_color_selection_background);
+        mButtonColorSelection.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                onLongClickColorSelection(v);
+                return true;
+            }
+
+        });
+
+        mDefaultColorFilter = mButtonColorSelection.getColorFilter();
+        mButtonColorSelectionBackground.setBackgroundColor(0);
+        default_flag_colors = new int[]{0xFFF44336, 0xFFE91E63, 0xFFFF2C93, 0xFF9C27B0, 0xFF673AB7, 0xFF3F51B5};
     }
 
 
@@ -162,6 +189,37 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void onClickColorSelection(View v) {
+        setColorSelection(!mFlag.getFmsState().equals(Flag.APP_STATE.FLAG_FSM_STATE_COLOR_SELECTED));
+    }
+
+    public void setColorSelection(boolean activate) {
+        if (activate) {
+            mFlag.setFmsState(Flag.APP_STATE.FLAG_FSM_STATE_COLOR_SELECTED);
+            mButtonColorSelection.setColorFilter(mFlag.getColorSelected());
+            mButtonColorSelectionBackground.setBackgroundColor(mFlag.getColorSelected());
+        } else {
+
+            mFlag.setFmsState(Flag.APP_STATE.FLAG_FSM_STATE_IDLE);
+            mButtonColorSelection.setColorFilter(mDefaultColorFilter);
+            mButtonColorSelectionBackground.setBackgroundColor(0);
+        }
+
+    }
+
+    public void onLongClickColorSelection(View v) {
+
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(Constants.VIBRATING_TIME_SMALL);
+
+        ColorPickerDialog.newBuilder()
+                .setAllowCustom(true)
+                .setPresets(default_flag_colors)
+                .setColor(mFlag.getColorSelected())
+                .setShowAlphaSlider(false)
+                .setShowColorShades(false)
+                .show(this);
+    }
 
     public void onClickButtonAdd(View v) {
 
@@ -210,5 +268,18 @@ public class MainActivity extends AppCompatActivity
         }
 
         mFlagDrawingView.invalidate();
+    }
+
+    // Dialog of the color section
+    @Override
+    public void onDialogDismissed(int dialogId) {
+        // Nothing to do
+    }
+
+    @Override
+    public void onColorSelected(int dialogId, @ColorInt int color) {
+
+        mFlag.setColorSelected(color);
+        setColorSelection(true);
     }
 }

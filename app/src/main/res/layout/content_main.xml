@@ -197,10 +197,18 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_grid"/>
 
+            <LinearLayout android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:id="@+id/image_button_color_selection_background">
             <ImageButton
+                    android:id="@+id/image_button_color_selection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_brush"/>
+                    android:src="@drawable/ic_brush"
+                    android:onClick="onClickColorSelection"
+                    android:longClickable="true" />
+            </LinearLayout>
 
             <View android:layout_width="match_parent" android:layout_height="0dp"
                   android:layout_weight="1"/>
@@ -230,13 +238,13 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_toStartOf="@+id/right_toolbar"
-    android:background="@drawable/background_top_bottom_lines">
+            android:background="@drawable/background_top_bottom_lines">
 
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/no_layer_info_label_1"
-                android:gravity="center" />
+                android:gravity="center"/>
 
         <ImageView
                 android:background="@drawable/ic_add_layer"

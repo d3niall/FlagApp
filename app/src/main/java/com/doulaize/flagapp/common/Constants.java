@@ -14,4 +14,6 @@ public class Constants {
     public static final double RATIO_MIN_VALUE = 0.5;
     public static final double RATIO_MAX_VALUE = 3.5;
     public static final String RATIO_TEXT_SUMMARY = "%d:%d";
+
+    public static final int VIBRATING_TIME_SMALL = 200;
 }

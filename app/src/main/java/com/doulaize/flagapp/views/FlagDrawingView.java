@@ -5,6 +5,7 @@ import com.doulaize.flagapp.model.Flag;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -44,11 +45,13 @@ public class FlagDrawingView extends View {
         mVerticalOffset = verticalOffset;
     }
 
-    //    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        float pointX = event.getX();
-//        float pointY = event.getY();
-//        // Checks for the event that occurs
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float pointX = event.getX();
+        float pointY = event.getY();
+
+
+        // Checks for the event that occurs
 //        switch (event.getAction()) {
 //            case MotionEvent.ACTION_DOWN:
 //                path.moveTo(pointX, pointY);
@@ -59,8 +62,8 @@ public class FlagDrawingView extends View {
 //            default:
 //                return false;
 //        }
-//        // Force a view to draw again
-//        postInvalidate();
-//        return true;
-//    }
+        // Force a view to draw again
+        postInvalidate();
+        return true;
+    }
 }
