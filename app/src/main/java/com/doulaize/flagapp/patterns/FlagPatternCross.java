@@ -17,13 +17,4 @@ public class FlagPatternCross extends PatternInterface {
         return patternTypeEnum.CROSS;
     }
 
-    @Override
-    public void buttonAddPressed() {
-        // TODO
-    }
-
-    @Override
-    public void buttonRemovePressed() {
-        // TODO
-    }
 }

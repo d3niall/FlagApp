@@ -17,13 +17,4 @@ public class FlagPatternPall extends PatternInterface {
         return patternTypeEnum.PALL;
     }
 
-    @Override
-    public void buttonAddPressed() {
-        // TODO
-    }
-
-    @Override
-    public void buttonRemovePressed() {
-        // TODO
-    }
 }

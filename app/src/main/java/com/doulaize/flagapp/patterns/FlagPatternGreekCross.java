@@ -17,13 +17,4 @@ public class FlagPatternGreekCross extends PatternInterface {
         return patternTypeEnum.GREEKCROSS;
     }
 
-    @Override
-    public void buttonAddPressed() {
-        // TODO
-    }
-
-    @Override
-    public void buttonRemovePressed() {
-        // TODO
-    }
 }

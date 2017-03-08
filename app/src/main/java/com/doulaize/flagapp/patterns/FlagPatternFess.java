@@ -120,15 +120,13 @@ public class FlagPatternFess extends PatternInterface {
         if (null == mLeftCoordinates || null == mRightCoordinates || mLeftCoordinates.size() != mRightCoordinates.size())
             throw new IllegalStateException();
 
-        float r = (mLeftCoordinates.size() + 2.0f) / (mLeftCoordinates.size() + 1.0f);
-
-        for (int i = 0; i < mLeftCoordinates.size() - 1; i++) {
-
-            mLeftCoordinates.set(i, mLeftCoordinates.get(i) * r);
-            mRightCoordinates.set(i, mRightCoordinates.get(i) * r);
-        }
-
         if (mLeftCoordinates.size() > 0) {
+            for (int i = 0; i < mLeftCoordinates.size() - 1; i++) {
+
+                mLeftCoordinates.set(i, 100 * mLeftCoordinates.get(i) / mLeftCoordinates.get(mLeftCoordinates.size() - 1));
+                mRightCoordinates.set(i, 100 * mRightCoordinates.get(i) / mRightCoordinates.get(mRightCoordinates.size() - 1));
+            }
+
             mLeftCoordinates.remove(mLeftCoordinates.size() - 1);
             mRightCoordinates.remove(mRightCoordinates.size() - 1);
         }

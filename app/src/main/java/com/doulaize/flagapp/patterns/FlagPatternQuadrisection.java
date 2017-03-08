@@ -17,13 +17,4 @@ public class FlagPatternQuadrisection extends PatternInterface {
         return patternTypeEnum.QUADRISECTION;
     }
 
-    @Override
-    public void buttonAddPressed() {
-        // TODO
-    }
-
-    @Override
-    public void buttonRemovePressed() {
-        // TODO
-    }
 }

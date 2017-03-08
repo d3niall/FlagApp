@@ -24,17 +24,13 @@ public abstract class PatternInterface {
         return false;
     }
 
-    public Ratio getRatio() {
-        return mRatio;
-    }
-
     public void setRatio(Ratio ratio) {
         mRatio = ratio;
     }
 
-    abstract public void buttonAddPressed();
+    public void buttonAddPressed() {};
 
-    abstract public void buttonRemovePressed();
+    public void buttonRemovePressed() {};
 
     public enum patternTypeEnum {
         BORDER, CROSS, FESS, GREEKCROSS, PALE, PALL, QUADRISECTION, SALTIRE

@@ -30,18 +30,6 @@ public class FlagPatternPale extends PatternInterface {
         }
     }
 
-    private void setupPaint() {
-//        // Setup paint with color and stroke styles
-//        drawPaint = new Paint();
-//        drawPaint.setColor(paintColor);
-//        drawPaint.setAntiAlias(true);
-//        drawPaint.setStrokeWidth(5);
-//        drawPaint.setStyle(Paint.Style.STROKE);
-//        drawPaint.setStrokeJoin(Paint.Join.ROUND);
-//        drawPaint.setStrokeCap(Paint.Cap.ROUND);
-    }
-
-
     @Override
     public patternTypeEnum getPatternType() {
         return patternTypeEnum.PALE;
@@ -135,15 +123,12 @@ public class FlagPatternPale extends PatternInterface {
         if (null == mTopCoordinates || null == mBottomCoordinates || mTopCoordinates.size() != mBottomCoordinates.size())
             throw new IllegalStateException();
 
-        float r = (mTopCoordinates.size() + 2.0f) / (mTopCoordinates.size() + 1.0f);
-
-        for (int i = 0; i < mTopCoordinates.size() - 1; i++) {
-
-            mTopCoordinates.set(i, mTopCoordinates.get(i) * r);
-            mBottomCoordinates.set(i, mBottomCoordinates.get(i) * r);
-        }
-
         if (mTopCoordinates.size() > 0) {
+            for (int i = 0; i < mTopCoordinates.size() - 1; i++) {
+
+                mTopCoordinates.set(i, 100 * mTopCoordinates.get(i) / mTopCoordinates.get(mTopCoordinates.size() - 1));
+                mBottomCoordinates.set(i, 100 * mBottomCoordinates.get(i) / mBottomCoordinates.get(mBottomCoordinates.size() - 1));
+            }
             mTopCoordinates.remove(mTopCoordinates.size() - 1);
             mBottomCoordinates.remove(mBottomCoordinates.size() - 1);
         }

@@ -17,13 +17,4 @@ public class FlagPatternBorder extends PatternInterface {
         return patternTypeEnum.BORDER;
     }
 
-    @Override
-    public void buttonAddPressed() {
-        // TODO
-    }
-
-    @Override
-    public void buttonRemovePressed() {
-        // TODO
-    }
 }

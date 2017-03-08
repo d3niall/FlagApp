@@ -17,13 +17,4 @@ public class FlagPatternSaltire extends PatternInterface {
         return patternTypeEnum.SALTIRE;
     }
 
-    @Override
-    public void buttonAddPressed() {
-        // TODO
-    }
-
-    @Override
-    public void buttonRemovePressed() {
-        // TODO
-    }
 }
