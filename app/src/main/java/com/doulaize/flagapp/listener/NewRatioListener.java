@@ -6,6 +6,8 @@ package com.doulaize.flagapp.listener;
 
 public interface NewRatioListener {
 
-    public void OnNewRatioSelected(Integer EW, Integer NS);
+    public void onNewRatioSelected(Integer EW, Integer NS);
+
+    public void onNewFlagViewSize(float width, float height);
 
 }

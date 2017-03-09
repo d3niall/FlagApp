@@ -105,7 +105,7 @@ public class ChangeRatioDialogFragment extends DialogFragment {
             public void onClick(View v) {
 
                 if (null != newRatioListener) {
-                    newRatioListener.OnNewRatioSelected(np_l.getValue(), np_r.getValue());
+                    newRatioListener.onNewRatioSelected(np_l.getValue(), np_r.getValue());
                 }
                 dismiss();
             }

@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     Flag mFlag;
     FlagLayersAdapter mFlagLayersAdapter;
     FlagDrawingView mFlagDrawingView;
+
     ImageButton mButtonColorSelection;
     View mButtonColorSelectionBackground;
     ColorFilter mDefaultColorFilter;
@@ -59,12 +60,11 @@ public class MainActivity extends AppCompatActivity
 
         mFlagDrawingView = (FlagDrawingView) findViewById(R.id.drawing_area);
 
-        Integer sizeOfTick = getResources().getDimensionPixelSize(R.dimen.tick_size);
-
-        mFlagDrawingView.setHorizontalOffset(sizeOfTick);
-        mFlagDrawingView.setVerticalOffset(sizeOfTick);
-
         mFlag = new Flag();
+
+        Integer sizeOfTick = getResources().getDimensionPixelSize(R.dimen.tick_size);
+        mFlag.setOffset(sizeOfTick, sizeOfTick);
+
         mFlagLayersAdapter = new FlagLayersAdapter(this, R.layout.first_toolbar_item, mFlag.getLayers());
 
         ListView listView = (ListView) findViewById(R.id.first_toolbar_list);
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity
         listView.addFooterView(l);
 
         mFlagDrawingView.setFlag(mFlag);
+        mFlagDrawingView.setNewRatioListener(this);
         UpdateMainContentDisplay();
 
         mButtonColorSelection = (ImageButton) findViewById(R.id.image_button_color_selection);
@@ -242,9 +243,14 @@ public class MainActivity extends AppCompatActivity
         UpdateMainContentDisplay();
     }
 
-    public void OnNewRatioSelected(Integer EW, Integer NS) {
+    public void onNewRatioSelected(Integer EW, Integer NS) {
 
         mFlag.setNewRatio(EW, NS);
+        UpdateMainContentDisplay();
+    }
+
+    public void onNewFlagViewSize(float width, float height) {
+        mFlag.setNewDimensions(width, height);
         UpdateMainContentDisplay();
     }
 

@@ -1,5 +1,6 @@
 package com.doulaize.flagapp.views;
 
+import com.doulaize.flagapp.listener.NewRatioListener;
 import com.doulaize.flagapp.model.Flag;
 
 import android.content.Context;
@@ -15,8 +16,7 @@ public class FlagDrawingView extends View {
 
     Flag mFlag;
 
-    Integer mHorizontalOffset = 0;
-    Integer mVerticalOffset = 0;
+    NewRatioListener newRatioListener;
 
     public FlagDrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,15 +34,7 @@ public class FlagDrawingView extends View {
         if (mFlag == null)
             throw new IllegalStateException();
 
-        mFlag.onDraw(canvas, mHorizontalOffset, mVerticalOffset, getWidth(), getHeight());
-    }
-
-    public void setHorizontalOffset(Integer horizontalOffset) {
-        mHorizontalOffset = horizontalOffset;
-    }
-
-    public void setVerticalOffset(Integer verticalOffset) {
-        mVerticalOffset = verticalOffset;
+        mFlag.onDraw(canvas);
     }
 
     @Override
@@ -50,6 +42,10 @@ public class FlagDrawingView extends View {
         float pointX = event.getX();
         float pointY = event.getY();
 
+        final int action = event.getAction();
+
+        if (action == MotionEvent.ACTION_UP)
+            mFlag.onClickDrawingArea(pointX, pointY);
 
         // Checks for the event that occurs
 //        switch (event.getAction()) {
@@ -65,5 +61,16 @@ public class FlagDrawingView extends View {
         // Force a view to draw again
         postInvalidate();
         return true;
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        if (null != newRatioListener)
+            newRatioListener.onNewFlagViewSize(getWidth(), getHeight()); //height is ready
+    }
+
+    public void setNewRatioListener(NewRatioListener newRatioListener) {
+        this.newRatioListener = newRatioListener;
     }
 }

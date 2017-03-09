@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,53 +37,51 @@ public class FlagPatternPale extends PatternInterface {
     }
 
     @Override
-    public void onDraw(Canvas canvas, Integer horizontalOffset, Integer verticalOffset, Integer maxWidth, Integer maxHeight) {
+    public void onDraw(Canvas canvas) {
 
         if (null == mTopCoordinates || null == mBottomCoordinates || mTopCoordinates.size() != mBottomCoordinates.size())
             throw new IllegalStateException();
 
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.MAGENTA);
-        float newWidth = 0;
-        float newHeight = 0;
 
-        if ((maxWidth - 2 * horizontalOffset) * mRatio.getNS() / mRatio.getEW() < (maxHeight - 2 * verticalOffset)) {
-            newWidth = maxWidth - 2 * horizontalOffset;
-            newHeight = (maxWidth - 2 * horizontalOffset) * mRatio.getNS() / mRatio.getEW();
-        } else {
-            newWidth = (maxHeight - 2 * verticalOffset) * mRatio.getEW() / mRatio.getNS();
-            newHeight = maxHeight - 2 * verticalOffset;
-        }
-        float newHorizontalOffset = (maxWidth - newWidth) / 2;
-        float newVerticalOffset = (maxHeight - newHeight) / 2;
+//        //TODO : Move this into Ratio or PAtternInterface
+//        if ((maxWidth - 2 * horizontalOffset) * mRatio.getNS() / mRatio.getEW() < (maxHeight - 2 * verticalOffset)) {
+//            newWidth = maxWidth - 2 * horizontalOffset;
+//            newHeight = (maxWidth - 2 * horizontalOffset) * mRatio.getNS() / mRatio.getEW();
+//        } else {
+//            newWidth = (maxHeight - 2 * verticalOffset) * mRatio.getEW() / mRatio.getNS();
+//            newHeight = maxHeight - 2 * verticalOffset;
+//        }
+//        float newHorizontalOffset = (maxWidth - newWidth) / 2;
+//        float newVerticalOffset = (maxHeight - newHeight) / 2;
 
         paint.setColor(Color.BLACK);
 
-        float yTop = newVerticalOffset;
-        float yBottom = newVerticalOffset + newHeight;
+        float yTop = mRatio.getVerticalOffset();
+        float yBottom = mRatio.getVerticalOffset() + mRatio.getViewHeight();
 
-        float xTop = newHorizontalOffset;
-        float xBottom = newHorizontalOffset;
+        float xTop = mRatio.getHorizontalOffset();
+        float xBottom = mRatio.getHorizontalOffset();
 
         for (int i = 0; i < mTopCoordinates.size(); ++i) {
 
             Path path = new Path();
             path.moveTo(xTop, yTop);
-            path.lineTo(newHorizontalOffset + mTopCoordinates.get(i) * newWidth / 100, yTop);
-            path.lineTo(newHorizontalOffset + mBottomCoordinates.get(i) * newWidth / 100, yBottom);
+            path.lineTo(mRatio.getHorizontalOffset() + mTopCoordinates.get(i) * mRatio.getViewWidth() / 100, yTop);
+            path.lineTo(mRatio.getHorizontalOffset() + mBottomCoordinates.get(i) * mRatio.getViewWidth() / 100, yBottom);
             path.lineTo(xBottom, yBottom);
             path.lineTo(xTop, yTop);
 
             canvas.drawPath(path, paint);
 
-            xTop = newHorizontalOffset + mTopCoordinates.get(i) * newWidth / 100;
-            xBottom = newHorizontalOffset + mBottomCoordinates.get(i) * newWidth / 100;
+            xTop = mRatio.getHorizontalOffset() + mTopCoordinates.get(i) * mRatio.getViewWidth() / 100;
+            xBottom = mRatio.getHorizontalOffset() + mBottomCoordinates.get(i) * mRatio.getViewWidth() / 100;
         }
 
         Path path = new Path();
         path.moveTo(xTop, yTop);
-        path.lineTo(newHorizontalOffset + newWidth, yTop);
-        path.lineTo(newHorizontalOffset + newWidth, yBottom);
+        path.lineTo(mRatio.getHorizontalOffset() + mRatio.getViewWidth(), yTop);
+        path.lineTo(mRatio.getHorizontalOffset() + mRatio.getViewWidth(), yBottom);
         path.lineTo(xBottom, yBottom);
         path.lineTo(xTop, yTop);
 
@@ -132,5 +131,12 @@ public class FlagPatternPale extends PatternInterface {
             mTopCoordinates.remove(mTopCoordinates.size() - 1);
             mBottomCoordinates.remove(mBottomCoordinates.size() - 1);
         }
+    }
+
+    @Override
+    public void setColor(float x, float y, int color) {
+
+        Point p = mRatio.getOrthoCoord(x, y);
+        // TODO : Trouver Couleur en fonction des coord et update mColors
     }
 }

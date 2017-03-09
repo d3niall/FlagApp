@@ -3,6 +3,7 @@ package com.doulaize.flagapp.patterns;
 import com.doulaize.flagapp.model.Ratio;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 
 /**
  * Created by rdeleuze on 3/1/2017
@@ -14,7 +15,7 @@ public abstract class PatternInterface {
 
     abstract public patternTypeEnum getPatternType();
 
-    abstract public void onDraw(Canvas canvas, Integer horizontalOffset, Integer verticalOffset, Integer maxWidth, Integer maxHeight);
+    abstract public void onDraw(Canvas canvas);
 
     public boolean isButtonAddAllowed() {
         return false;
@@ -33,6 +34,9 @@ public abstract class PatternInterface {
 
 
     public void buttonRemovePressed() {
+    }
+
+    public void setColor(float x, float y, int color) {
     }
 
 

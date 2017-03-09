@@ -33,52 +33,39 @@ public class FlagPatternFess extends PatternInterface {
     }
 
     @Override
-    public void onDraw(Canvas canvas, Integer horizontalOffset, Integer verticalOffset, Integer maxWidth, Integer maxHeight) {
+    public void onDraw(Canvas canvas) {
 
         if (null == mLeftCoordinates || null == mRightCoordinates || mLeftCoordinates.size() != mRightCoordinates.size())
             throw new IllegalStateException();
 
-        float newWidth = 0;
-        float newHeight = 0;
-        // TODO : move these lines into Ratio Class
-        if ((maxWidth - 2 * horizontalOffset) * mRatio.getNS() / mRatio.getEW() < (maxHeight - 2 * verticalOffset)) {
-            newWidth = maxWidth - 2 * horizontalOffset;
-            newHeight = (maxWidth - 2 * horizontalOffset) * mRatio.getNS() / mRatio.getEW();
-        } else {
-            newWidth = (maxHeight - 2 * verticalOffset) * mRatio.getEW() / mRatio.getNS();
-            newHeight = maxHeight - 2 * verticalOffset;
-        }
-        float newHorizontalOffset = (maxWidth - newWidth) / 2;
-        float newVerticalOffset = (maxHeight - newHeight) / 2;
-
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.BLACK);
 
-        float xLeft = newHorizontalOffset;
-        float xRight = newHorizontalOffset + newWidth;
+        float xLeft = mRatio.getHorizontalOffset();
+        float xRight = mRatio.getHorizontalOffset() + mRatio.getViewWidth();
 
-        float yLeft = newVerticalOffset;
-        float yRight = newVerticalOffset;
+        float yLeft = mRatio.getVerticalOffset();
+        float yRight = mRatio.getVerticalOffset();
 
         for (int i = 0; i < mLeftCoordinates.size(); ++i) {
 
             Path path = new Path();
             path.moveTo(xLeft, yLeft);
-            path.lineTo(xLeft, newVerticalOffset + mLeftCoordinates.get(i) * newHeight / 100);
-            path.lineTo(xRight, newVerticalOffset + mRightCoordinates.get(i) * newHeight / 100);
+            path.lineTo(xLeft, mRatio.getVerticalOffset() + mLeftCoordinates.get(i) * mRatio.getViewHeight() / 100);
+            path.lineTo(xRight, mRatio.getVerticalOffset() + mRightCoordinates.get(i) * mRatio.getViewHeight() / 100);
             path.lineTo(xRight, yRight);
             path.lineTo(xLeft, yLeft);
 
             canvas.drawPath(path, paint);
 
-            yLeft = newVerticalOffset + mLeftCoordinates.get(i) * newHeight / 100;
-            yRight = newVerticalOffset + mRightCoordinates.get(i) * newHeight / 100;
+            yLeft = mRatio.getVerticalOffset() + mLeftCoordinates.get(i) * mRatio.getViewHeight() / 100;
+            yRight = mRatio.getVerticalOffset() + mRightCoordinates.get(i) * mRatio.getViewHeight() / 100;
         }
 
         Path path = new Path();
         path.moveTo(xLeft, yLeft);
-        path.lineTo(xLeft, newVerticalOffset + newHeight);
-        path.lineTo(xRight, newVerticalOffset + newHeight);
+        path.lineTo(xLeft, mRatio.getVerticalOffset() + mRatio.getViewHeight());
+        path.lineTo(xRight, mRatio.getVerticalOffset() + mRatio.getViewHeight());
         path.lineTo(xRight, yRight);
         path.lineTo(xLeft, yLeft);
 

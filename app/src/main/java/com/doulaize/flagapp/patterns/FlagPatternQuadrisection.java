@@ -8,7 +8,7 @@ import android.graphics.Canvas;
 public class FlagPatternQuadrisection extends PatternInterface {
 
     @Override
-    public void onDraw(Canvas canvas, Integer horizontalOffset, Integer verticalOffset, Integer maxWidth, Integer maxHeight) {
+    public void onDraw(Canvas canvas) {
 
     }
 

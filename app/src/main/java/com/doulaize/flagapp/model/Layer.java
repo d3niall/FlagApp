@@ -58,10 +58,10 @@ public class Layer {
         this.mPatternInterface.setRatio(mRatio);
     }
 
-    public void onDraw(Canvas canvas, Integer horizontalOffset, Integer verticalOffset, Integer maxWidth, Integer maxHeight) {
+    public void onDraw(Canvas canvas) {
 
         if (mPatternInterface != null)
-            mPatternInterface.onDraw(canvas, horizontalOffset, verticalOffset, maxWidth, maxHeight);
+            mPatternInterface.onDraw(canvas);
     }
 
     public PatternInterface getPatternInterface() {
@@ -95,5 +95,9 @@ public class Layer {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public void setColor(float x, float y, int color) {
+        mPatternInterface.setColor(x, y, color);
     }
 }
