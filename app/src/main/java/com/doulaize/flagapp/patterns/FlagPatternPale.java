@@ -59,7 +59,6 @@ public class FlagPatternPale extends PatternInterface {
         float xTop = mRatio.getHorizontalOffset();
         float xBottom = mRatio.getHorizontalOffset();
 
-
         for (int i = 0; i < mTopCoordinates.size(); ++i) {
 
             paint.setStyle(Paint.Style.FILL);
