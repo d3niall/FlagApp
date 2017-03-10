@@ -39,6 +39,7 @@ public class FlagLayersAdapter extends ArrayAdapter<Layer> {
         String imageName = "pattern_" + layer.getPatternInterface().getPatternType().name().toLowerCase();
 
         ImageView imageView = (ImageView) v.findViewById(R.id.image_layer);
+        ImageView iconVisibilityView = (ImageView) v.findViewById(R.id.icons_layer_hidden);
 
         Resources resources = getContext().getResources();
         final int resourceId = resources.getIdentifier(imageName, "drawable", getContext().getPackageName());
@@ -50,6 +51,11 @@ public class FlagLayersAdapter extends ArrayAdapter<Layer> {
         } else {
             v.setBackgroundResource(R.drawable.ic_tab_dark);
         }
+
+        if (layer.isVisible())
+            iconVisibilityView.setVisibility(View.INVISIBLE);
+        else
+            iconVisibilityView.setVisibility(View.VISIBLE);
 
         return v;
     }

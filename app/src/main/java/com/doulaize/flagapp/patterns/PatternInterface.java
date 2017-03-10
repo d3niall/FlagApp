@@ -3,7 +3,6 @@ package com.doulaize.flagapp.patterns;
 import com.doulaize.flagapp.model.Ratio;
 
 import android.graphics.Canvas;
-import android.graphics.Point;
 
 /**
  * Created by rdeleuze on 3/1/2017

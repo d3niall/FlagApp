@@ -216,7 +216,8 @@
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_visibility"/>
+                    android:src="@drawable/ic_visibility"
+                    android:onClick="onClickHideLayer"/>
 
             <ImageButton
                     android:layout_width="wrap_content"

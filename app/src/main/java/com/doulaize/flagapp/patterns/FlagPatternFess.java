@@ -67,7 +67,7 @@ public class FlagPatternFess extends PatternInterface {
             path.lineTo(xLeft, yLeft);
             canvas.drawPath(path, paint);
 
-            if (drawEdges){
+            if (drawEdges) {
                 Path pathEdge = new Path();
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setColor(COLOR_EDGE);
@@ -84,7 +84,7 @@ public class FlagPatternFess extends PatternInterface {
         }
 
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(mColors.get(mColors.size()-1));
+        paint.setColor(mColors.get(mColors.size() - 1));
         Path path = new Path();
         path.moveTo(xLeft, yLeft);
         path.lineTo(xLeft, mRatio.getVerticalOffset() + mRatio.getViewHeight());
@@ -156,13 +156,13 @@ public class FlagPatternFess extends PatternInterface {
     @Override
     public void setColor(float x, float y, int color) {
 
-        if (null == mLeftCoordinates || null == mRightCoordinates || mLeftCoordinates.size() != mRightCoordinates.size() || mLeftCoordinates.size()+1 != mColors.size())
+        if (null == mLeftCoordinates || null == mRightCoordinates || mLeftCoordinates.size() != mRightCoordinates.size() || mLeftCoordinates.size() + 1 != mColors.size())
             throw new IllegalStateException();
 
         boolean found = false;
         for (int i = 0; i < mLeftCoordinates.size(); i++) {
 
-            if (((mRightCoordinates.get(i)-mLeftCoordinates.get(i))*x)/100 + mLeftCoordinates.get(i) > y ){
+            if (((mRightCoordinates.get(i) - mLeftCoordinates.get(i)) * x) / 100 + mLeftCoordinates.get(i) > y) {
                 found = true;
                 mColors.set(i, color);
                 break;

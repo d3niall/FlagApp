@@ -1,9 +1,12 @@
 package com.doulaize.flagapp.model;
 
+import com.doulaize.flagapp.common.Constants;
 import com.doulaize.flagapp.patterns.PatternInterface;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 
 import java.util.ArrayList;
@@ -18,39 +21,49 @@ import static com.doulaize.flagapp.model.Flag.APP_STATE.FLAG_FSM_STATE_COLOR_SEL
 
 public class Flag {
 
-    private List<Layer> layers;
+    private List<Layer> mLayers;
 
-    private Ratio ratio;
+    private Ratio mRatio;
     private APP_STATE fmsState = APP_STATE.FLAG_FSM_STATE_IDLE;
-    private int colorSelected = Color.RED;
+    private int mColorSelected = Color.RED;
+
+    private Paint paint = new Paint();
 
     public Flag() {
-        layers = new ArrayList<>();
-        ratio = new Ratio();
+        mLayers = new ArrayList<>();
+        mRatio = new Ratio();
     }
 
     public List<Layer> getLayers() {
-        return layers;
+        return mLayers;
     }
 
     public void addLayer(PatternInterface.patternTypeEnum patternTypeEnum) {
 
         Layer l = new Layer(patternTypeEnum);
-        if (null == layers)
+        if (null == mLayers)
             throw new IllegalStateException();
 
-        for (int i = 0; i < layers.size(); i++) {
-            layers.get(i).setActive(false);
+        for (int i = 0; i < mLayers.size(); i++) {
+            mLayers.get(i).setActive(false);
         }
 
         l.setActive(true);
-        l.setRatio(ratio);
-        layers.add(l);
+        l.setRatio(mRatio);
+        mLayers.add(l);
+    }
+
+    public void hideOrShowActiveLayer() {
+
+        for (int i = 0; i < mLayers.size(); i++) {
+            if (mLayers.get(i).isActive())
+                mLayers.get(i).hideOrShowLayer();
+        }
     }
 
     public void deleteActiveLayer() {
 
-        ListIterator<Layer> iter = layers.listIterator();
+        ListIterator<Layer> iter = mLayers.listIterator();
         while (iter.hasNext()) {
             if (iter.next().isActive()) {
                 iter.remove();
@@ -60,10 +73,10 @@ public class Flag {
 
     public Layer getActiveLayer() {
 
-        for (int i = 0; i < layers.size(); i++) {
+        for (int i = 0; i < mLayers.size(); i++) {
 
-            if (layers.get(i).isActive()) {
-                return layers.get(i);
+            if (mLayers.get(i).isActive()) {
+                return mLayers.get(i);
             }
         }
         return null;
@@ -72,56 +85,74 @@ public class Flag {
     public void setActiveLayer(int layerIndex) {
 
         if (layerIndex == -1)
-            layerIndex = layers.size() - 1;
+            layerIndex = mLayers.size() - 1;
 
-        for (int i = 0; i < layers.size(); i++) {
+        for (int i = 0; i < mLayers.size(); i++) {
             if (i != layerIndex)
-                layers.get(i).setActive(false);
+                mLayers.get(i).setActive(false);
             else
-                layers.get(i).setActive(true);
+                mLayers.get(i).setActive(true);
         }
     }
 
     public int getLayersNumber() {
 
-        if (layers == null)
+        if (mLayers == null)
             return 0;
         return getLayers().size();
     }
 
     public void onDraw(Canvas canvas) {
-        if (layers == null) {
+
+        if (mLayers == null) {
             return;
         }
 
-        for (int i = 0; i < layers.size(); i++)
-            layers.get(i).onDraw(canvas);
+        for (int i = 0; i < mLayers.size(); i++) {
+            mLayers.get(i).onDraw(canvas);
+        }
+
+        // Draw the edge
+        float yTop = mRatio.getVerticalOffset();
+        float yBottom = mRatio.getVerticalOffset() + mRatio.getViewHeight();
+        float xLeft = mRatio.getHorizontalOffset();
+        float xRight = mRatio.getHorizontalOffset() + mRatio.getViewWidth();
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Constants.COLOR_EDGE);
+        Path path = new Path();
+        path.moveTo(xLeft, yTop);
+        path.lineTo(xLeft, yBottom);
+        path.lineTo(xRight, yBottom);
+        path.lineTo(xRight, yTop);
+        path.lineTo(xLeft, yTop);
+        canvas.drawPath(path, paint);
     }
 
     public Ratio getRatio() {
-        return ratio;
+        return mRatio;
     }
 
     public void setNewRatio(Integer ew, Integer ns) {
-        if (layers == null || ratio == null)
+        if (mLayers == null || mRatio == null)
             throw new IllegalStateException();
 
-        ratio.setNS(ns);
-        ratio.setEW(ew);
+        mRatio.setNS(ns);
+        mRatio.setEW(ew);
 
-        for (int i = 0; i < layers.size(); i++)
-            layers.get(i).setRatio(ratio);
+        for (int i = 0; i < mLayers.size(); i++)
+            mLayers.get(i).setRatio(mRatio);
     }
 
     public void setNewDimensions(float width, float height) {
-        if (layers == null || ratio == null)
+        if (mLayers == null || mRatio == null)
             throw new IllegalStateException();
 
-        ratio.setMaximalViewWidth(width);
-        ratio.setMaximalViewHeight(height);
+        mRatio.setMaximalViewWidth(width);
+        mRatio.setMaximalViewHeight(height);
 
-        for (int i = 0; i < layers.size(); i++)
-            layers.get(i).setRatio(ratio);
+        for (int i = 0; i < mLayers.size(); i++)
+            mLayers.get(i).setRatio(mRatio);
     }
 
     public APP_STATE getFmsState() {
@@ -133,17 +164,17 @@ public class Flag {
     }
 
     public int getColorSelected() {
-        return colorSelected;
+        return mColorSelected;
     }
 
     public void setColorSelected(int colorSelected) {
-        this.colorSelected = colorSelected;
+        this.mColorSelected = colorSelected;
     }
 
     public void onClickDrawingArea(float x, float y) {
 
         if (fmsState == FLAG_FSM_STATE_COLOR_SELECTED) {
-            Point p = ratio.getOrthoCoord(x, y);
+            Point p = mRatio.getOrthoCoord(x, y);
 
             if (0 < p.x && p.x < 100 && 0 < p.y && p.y < 100)
                 getActiveLayer().setColor(p.x, p.y, getColorSelected());
@@ -152,8 +183,8 @@ public class Flag {
     }
 
     public void setOffset(Integer offsetH, Integer offsetV) {
-        ratio.setMinimalHorizontalOffset(offsetH);
-        ratio.setMinimalVerticalOffset(offsetV);
+        mRatio.setMinimalHorizontalOffset(offsetH);
+        mRatio.setMinimalVerticalOffset(offsetV);
     }
 
     static public enum APP_STATE {FLAG_FSM_STATE_IDLE, FLAG_FSM_STATE_COLOR_SELECTED}

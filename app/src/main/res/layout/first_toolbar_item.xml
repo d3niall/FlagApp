@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_tab_dark">
@@ -10,11 +8,19 @@
     <ImageView
             android:id="@+id/image_layer"
             android:contentDescription="@string/first_toolbar_item_description"
-            android:layout_marginTop="@dimen/side_toolbar_item_image_margin"
-            android:layout_marginBottom="@dimen/side_toolbar_item_image_margin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layer_tab_image_height"
             android:src="@drawable/pattern_border"
+            android:layout_centerVertical="true"
     />
 
-</LinearLayout>
+    <ImageView
+            android:contentDescription="@string/first_toolbar_item_description"
+            android:id="@+id/icons_layer_hidden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_hidden"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"/>
+
+</RelativeLayout>

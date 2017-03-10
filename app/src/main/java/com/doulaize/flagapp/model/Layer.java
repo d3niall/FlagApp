@@ -12,8 +12,6 @@ import com.doulaize.flagapp.patterns.PatternInterface;
 
 import android.graphics.Canvas;
 
-import java.util.IllegalFormatCodePointException;
-
 /**
  * Created by rdeleuze on 2/16/2017
  */
@@ -23,7 +21,8 @@ public class Layer {
     private PatternInterface mPatternInterface;
     private Grid mGrid;
     private Ratio mRatio;
-    private boolean active = false;
+    private boolean mActive = false;
+    private boolean mVisible = true;
 
     public Layer(PatternInterface.patternTypeEnum patternTypeEnum) {
 
@@ -62,7 +61,7 @@ public class Layer {
 
     public void onDraw(Canvas canvas) {
 
-        if (mPatternInterface != null)
+        if (mPatternInterface != null && mVisible)
             mPatternInterface.onDraw(canvas, isActive());
     }
 
@@ -92,17 +91,27 @@ public class Layer {
     }
 
     public boolean isActive() {
-        return active;
+        return mActive;
     }
 
     public void setActive(boolean active) {
-        this.active = active;
+        this.mActive = active;
     }
 
     public void setColor(float x, float y, int color) {
 
+        if (!mVisible)
+            return;
         if (x <= 0 || x >= 100 || y <= 0 || y >= 100)
             throw new IllegalStateException();
         mPatternInterface.setColor(x, y, color);
+    }
+
+    public void hideOrShowLayer() {
+        mVisible = !mVisible;
+    }
+
+    public boolean isVisible() {
+        return mVisible;
     }
 }

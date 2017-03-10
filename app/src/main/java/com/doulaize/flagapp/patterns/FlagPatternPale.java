@@ -6,13 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
-import android.provider.SyncStateContract;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.path;
 import static com.doulaize.flagapp.common.Constants.COLOR_EDGE;
 
 /**
@@ -49,7 +46,7 @@ public class FlagPatternPale extends PatternInterface {
     @Override
     public void onDraw(Canvas canvas, boolean drawEdges) {
 
-        if (null == mTopCoordinates || null == mBottomCoordinates || mTopCoordinates.size() != mBottomCoordinates.size() || mTopCoordinates.size()+1 != mColors.size())
+        if (null == mTopCoordinates || null == mBottomCoordinates || mTopCoordinates.size() != mBottomCoordinates.size() || mTopCoordinates.size() + 1 != mColors.size())
             throw new IllegalStateException();
 
 
@@ -71,7 +68,7 @@ public class FlagPatternPale extends PatternInterface {
             path.lineTo(xTop, yTop);
             canvas.drawPath(path, paint);
 
-            if (drawEdges){
+            if (drawEdges) {
                 Path pathEdge = new Path();
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setColor(COLOR_EDGE);
@@ -88,7 +85,7 @@ public class FlagPatternPale extends PatternInterface {
         }
 
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(mColors.get(mColors.size()-1));
+        paint.setColor(mColors.get(mColors.size() - 1));
         Path path = new Path();
         path.moveTo(xTop, yTop);
         path.lineTo(mRatio.getHorizontalOffset() + mRatio.getViewWidth(), yTop);
@@ -166,7 +163,7 @@ public class FlagPatternPale extends PatternInterface {
         boolean found = false;
         for (int i = 0; i < mTopCoordinates.size(); i++) {
 
-            if (((mBottomCoordinates.get(i)-mTopCoordinates.get(i))*y)/100 + mTopCoordinates.get(i) > x ){
+            if (((mBottomCoordinates.get(i) - mTopCoordinates.get(i)) * y) / 100 + mTopCoordinates.get(i) > x) {
                 found = true;
                 mColors.set(i, color);
                 break;

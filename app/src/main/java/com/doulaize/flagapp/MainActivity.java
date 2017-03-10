@@ -162,6 +162,13 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public void onClickHideLayer(View v) {
+
+        mFlag.hideOrShowActiveLayer();
+        mFlagLayersAdapter.notifyDataSetChanged();
+        UpdateMainContentDisplay();
+    }
+
     public void onClickDeleteLayer(View v) {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

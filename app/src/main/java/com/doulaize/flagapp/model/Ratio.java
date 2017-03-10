@@ -130,12 +130,12 @@ public class Ratio {
         calculateOffsets();
     }
 
-    public Point getOrthoCoord (float aX, float aY){
+    public Point getOrthoCoord(float aX, float aY) {
 
         Point p = new Point();
 
-        p.x = (int)( (100./mViewWidth) *(aX - mHorizontalOffset));
-        p.y = (int)( (100./mViewHeight) *(aY - mVerticalOffset));
+        p.x = (int) ((100. / mViewWidth) * (aX - mHorizontalOffset));
+        p.y = (int) ((100. / mViewHeight) * (aY - mVerticalOffset));
 
         return p;
     }
