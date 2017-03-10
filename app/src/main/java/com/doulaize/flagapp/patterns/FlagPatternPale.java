@@ -1,13 +1,19 @@
 package com.doulaize.flagapp.patterns;
 
+import com.doulaize.flagapp.common.Constants;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.provider.SyncStateContract;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.path;
+import static com.doulaize.flagapp.common.Constants.COLOR_EDGE;
 
 /**
  * Created by rdeleuze on 2/16/2017
@@ -16,7 +22,7 @@ public class FlagPatternPale extends PatternInterface {
 
     private List<Float> mTopCoordinates;
     private List<Float> mBottomCoordinates;
-    private List<Color> mColors;
+    private List<Integer> mColors;
 
     private Paint paint = new Paint();
 
@@ -29,6 +35,10 @@ public class FlagPatternPale extends PatternInterface {
             mTopCoordinates.add((float) (i * 100. / 3D));
             mBottomCoordinates.add((float) (i * 100. / 3D));
         }
+
+        mColors.add(Color.TRANSPARENT);
+        mColors.add(Constants.DARK_YELLOW);
+        mColors.add(Color.TRANSPARENT);
     }
 
     @Override
@@ -37,25 +47,11 @@ public class FlagPatternPale extends PatternInterface {
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas, boolean drawEdges) {
 
-        if (null == mTopCoordinates || null == mBottomCoordinates || mTopCoordinates.size() != mBottomCoordinates.size())
+        if (null == mTopCoordinates || null == mBottomCoordinates || mTopCoordinates.size() != mBottomCoordinates.size() || mTopCoordinates.size()+1 != mColors.size())
             throw new IllegalStateException();
 
-        paint.setStyle(Paint.Style.STROKE);
-
-//        //TODO : Move this into Ratio or PAtternInterface
-//        if ((maxWidth - 2 * horizontalOffset) * mRatio.getNS() / mRatio.getEW() < (maxHeight - 2 * verticalOffset)) {
-//            newWidth = maxWidth - 2 * horizontalOffset;
-//            newHeight = (maxWidth - 2 * horizontalOffset) * mRatio.getNS() / mRatio.getEW();
-//        } else {
-//            newWidth = (maxHeight - 2 * verticalOffset) * mRatio.getEW() / mRatio.getNS();
-//            newHeight = maxHeight - 2 * verticalOffset;
-//        }
-//        float newHorizontalOffset = (maxWidth - newWidth) / 2;
-//        float newVerticalOffset = (maxHeight - newHeight) / 2;
-
-        paint.setColor(Color.BLACK);
 
         float yTop = mRatio.getVerticalOffset();
         float yBottom = mRatio.getVerticalOffset() + mRatio.getViewHeight();
@@ -63,29 +59,56 @@ public class FlagPatternPale extends PatternInterface {
         float xTop = mRatio.getHorizontalOffset();
         float xBottom = mRatio.getHorizontalOffset();
 
+
         for (int i = 0; i < mTopCoordinates.size(); ++i) {
 
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(mColors.get(i));
             Path path = new Path();
             path.moveTo(xTop, yTop);
             path.lineTo(mRatio.getHorizontalOffset() + mTopCoordinates.get(i) * mRatio.getViewWidth() / 100, yTop);
             path.lineTo(mRatio.getHorizontalOffset() + mBottomCoordinates.get(i) * mRatio.getViewWidth() / 100, yBottom);
             path.lineTo(xBottom, yBottom);
             path.lineTo(xTop, yTop);
-
             canvas.drawPath(path, paint);
+
+            if (drawEdges){
+                Path pathEdge = new Path();
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setColor(COLOR_EDGE);
+                pathEdge.moveTo(xTop, yTop);
+                pathEdge.lineTo(mRatio.getHorizontalOffset() + mTopCoordinates.get(i) * mRatio.getViewWidth() / 100, yTop);
+                pathEdge.lineTo(mRatio.getHorizontalOffset() + mBottomCoordinates.get(i) * mRatio.getViewWidth() / 100, yBottom);
+                pathEdge.lineTo(xBottom, yBottom);
+                pathEdge.lineTo(xTop, yTop);
+                canvas.drawPath(pathEdge, paint);
+            }
 
             xTop = mRatio.getHorizontalOffset() + mTopCoordinates.get(i) * mRatio.getViewWidth() / 100;
             xBottom = mRatio.getHorizontalOffset() + mBottomCoordinates.get(i) * mRatio.getViewWidth() / 100;
         }
 
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(mColors.get(mColors.size()-1));
         Path path = new Path();
         path.moveTo(xTop, yTop);
         path.lineTo(mRatio.getHorizontalOffset() + mRatio.getViewWidth(), yTop);
         path.lineTo(mRatio.getHorizontalOffset() + mRatio.getViewWidth(), yBottom);
         path.lineTo(xBottom, yBottom);
         path.lineTo(xTop, yTop);
-
         canvas.drawPath(path, paint);
+
+        if (drawEdges) {
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setColor(COLOR_EDGE);
+            Path pathEdge = new Path();
+            pathEdge.moveTo(xTop, yTop);
+            pathEdge.lineTo(mRatio.getHorizontalOffset() + mRatio.getViewWidth(), yTop);
+            pathEdge.lineTo(mRatio.getHorizontalOffset() + mRatio.getViewWidth(), yBottom);
+            pathEdge.lineTo(xBottom, yBottom);
+            pathEdge.lineTo(xTop, yTop);
+            canvas.drawPath(pathEdge, paint);
+        }
     }
 
     @Override
@@ -114,6 +137,7 @@ public class FlagPatternPale extends PatternInterface {
 
         mTopCoordinates.add(100 * r);
         mBottomCoordinates.add(100 * r);
+        mColors.add(Color.TRANSPARENT);
     }
 
     @Override
@@ -130,13 +154,28 @@ public class FlagPatternPale extends PatternInterface {
             }
             mTopCoordinates.remove(mTopCoordinates.size() - 1);
             mBottomCoordinates.remove(mBottomCoordinates.size() - 1);
+            mColors.remove(mColors.size() - 1);
         }
     }
 
     @Override
     public void setColor(float x, float y, int color) {
 
-        Point p = mRatio.getOrthoCoord(x, y);
-        // TODO : Trouver Couleur en fonction des coord et update mColors
+        if (null == mTopCoordinates || null == mBottomCoordinates || mTopCoordinates.size() != mBottomCoordinates.size())
+            throw new IllegalStateException();
+
+        boolean found = false;
+        for (int i = 0; i < mTopCoordinates.size(); i++) {
+
+            if (((mBottomCoordinates.get(i)-mTopCoordinates.get(i))*y)/100 + mTopCoordinates.get(i) > x ){
+                found = true;
+                mColors.set(i, color);
+                break;
+            }
+        }
+
+        if (!found) {
+            mColors.set(mColors.size() - 1, color);
+        }
     }
 }

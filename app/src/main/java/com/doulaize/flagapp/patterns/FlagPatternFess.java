@@ -33,7 +33,7 @@ public class FlagPatternFess extends PatternInterface {
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas, boolean drawEdges) {
 
         if (null == mLeftCoordinates || null == mRightCoordinates || mLeftCoordinates.size() != mRightCoordinates.size())
             throw new IllegalStateException();

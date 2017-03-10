@@ -4,6 +4,7 @@ import com.doulaize.flagapp.patterns.PatternInterface;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Point;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +143,10 @@ public class Flag {
     public void onClickDrawingArea(float x, float y) {
 
         if (fmsState == FLAG_FSM_STATE_COLOR_SELECTED) {
-            getActiveLayer().setColor(x, y, getColorSelected());
+            Point p = ratio.getOrthoCoord(x, y);
+
+            if (0 < p.x && p.x < 100 && 0 < p.y && p.y < 100)
+                getActiveLayer().setColor(p.x, p.y, getColorSelected());
         }
 
     }

@@ -12,6 +12,8 @@ import com.doulaize.flagapp.patterns.PatternInterface;
 
 import android.graphics.Canvas;
 
+import java.util.IllegalFormatCodePointException;
+
 /**
  * Created by rdeleuze on 2/16/2017
  */
@@ -61,7 +63,7 @@ public class Layer {
     public void onDraw(Canvas canvas) {
 
         if (mPatternInterface != null)
-            mPatternInterface.onDraw(canvas);
+            mPatternInterface.onDraw(canvas, isActive());
     }
 
     public PatternInterface getPatternInterface() {
@@ -98,6 +100,9 @@ public class Layer {
     }
 
     public void setColor(float x, float y, int color) {
+
+        if (x <= 0 || x >= 100 || y <= 0 || y >= 100)
+            throw new IllegalStateException();
         mPatternInterface.setColor(x, y, color);
     }
 }

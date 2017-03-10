@@ -15,7 +15,7 @@ public abstract class PatternInterface {
 
     abstract public patternTypeEnum getPatternType();
 
-    abstract public void onDraw(Canvas canvas);
+    abstract public void onDraw(Canvas canvas, boolean drawEdges);
 
     public boolean isButtonAddAllowed() {
         return false;

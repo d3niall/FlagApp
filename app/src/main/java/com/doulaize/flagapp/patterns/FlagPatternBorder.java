@@ -8,7 +8,7 @@ import android.graphics.Canvas;
 public class FlagPatternBorder extends PatternInterface {
 
     @Override
-    public void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas, boolean drawEdges) {
 
     }
 

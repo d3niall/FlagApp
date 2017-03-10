@@ -1,5 +1,7 @@
 package com.doulaize.flagapp.common;
 
+import android.support.annotation.ColorInt;
+
 /**
  * Created by rdeleuze on 2/16/17.
  */
@@ -16,4 +18,9 @@ public class Constants {
     public static final String RATIO_TEXT_SUMMARY = "%d:%d";
 
     public static final int VIBRATING_TIME_SMALL = 200;
+
+    @ColorInt
+    public static final int DARK_YELLOW = 0xFFFFD42A;
+    @ColorInt
+    public static final int COLOR_EDGE = 0xFF666666;
 }

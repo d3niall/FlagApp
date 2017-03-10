@@ -122,10 +122,12 @@ public class Ratio {
 
     public void setMaximalViewWidth(float maximalViewWidth) {
         mMaximalViewWidth = maximalViewWidth;
+        calculateOffsets();
     }
 
     public void setMaximalViewHeight(float maximalViewHeight) {
         mMaximalViewHeight = maximalViewHeight;
+        calculateOffsets();
     }
 
     public Point getOrthoCoord (float aX, float aY){
@@ -133,7 +135,7 @@ public class Ratio {
         Point p = new Point();
 
         p.x = (int)( (100./mViewWidth) *(aX - mHorizontalOffset));
-        p.y = (int)( (100./mViewHeight) *(aX - mVerticalOffset));
+        p.y = (int)( (100./mViewHeight) *(aY - mVerticalOffset));
 
         return p;
     }
