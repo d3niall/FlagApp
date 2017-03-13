@@ -86,40 +86,38 @@
                     android:layout_height="wrap_content">
 
                 <ImageButton
+                        android:id="@+id/button_pattern_ortho"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_square_angle"/>
+                        android:src="@drawable/ic_square_angle"
+                        android:onClick="onClickButtonOrtho"/>
 
                 <ImageButton
+                        android:id="@+id/button_pattern_horizontal_eq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_aigu_angle"/>
+                        android:src="@drawable/ic_eq_distribution_hor"
+                        android:onClick="onClickButtonHorizontalEq"/>
 
                 <ImageButton
+                        android:id="@+id/button_pattern_vertical_eq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_sym_hor"/>
+                        android:src="@drawable/ic_eq_distribution_ver"
+                        android:onClick="onClickButtonVerticalEq"/>
 
                 <ImageButton
+                        android:id="@+id/button_pattern_reverse_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_sym_ver"/>
+                        android:src="@drawable/ic_invert_hor"
+                        android:onClick="onClickButtonReverseHorizontal"/>
                 <ImageButton
+                        android:id="@+id/button_pattern_reverse_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_eq_hor"/>
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_eq_ver"/>
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_invert_hor"/>
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_invert_ver"/>
+                        android:src="@drawable/ic_invert_ver"
+                        android:onClick="onClickButtonReverseVertical"/>
 
                 <ImageButton
                         android:id="@+id/button_pattern_add"
@@ -142,7 +140,7 @@
 
     <com.doulaize.flagapp.views.FlagDrawingView
             android:id="@+id/drawing_area"
-            android:background="#fed"
+            android:background="@drawable/background_top_bottom_lines"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"

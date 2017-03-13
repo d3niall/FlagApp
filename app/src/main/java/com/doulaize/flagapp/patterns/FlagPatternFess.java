@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.doulaize.flagapp.common.Constants.COLOR_EDGE;
@@ -107,6 +108,11 @@ public class FlagPatternFess extends PatternInterface {
     }
 
     @Override
+    public boolean isButtonReverseVerticalAllowed() {
+        return true;
+    }
+
+    @Override
     public void buttonAddPressed() {
 
         if (null == mLeftCoordinates || null == mRightCoordinates || mLeftCoordinates.size() != mRightCoordinates.size())
@@ -140,6 +146,21 @@ public class FlagPatternFess extends PatternInterface {
             mLeftCoordinates.remove(mLeftCoordinates.size() - 1);
             mRightCoordinates.remove(mRightCoordinates.size() - 1);
             mColors.remove(mColors.size() - 1);
+        }
+    }
+
+    @Override
+    public void buttonReverseVerticalPressed() {
+        if (null == mLeftCoordinates || null == mRightCoordinates || mLeftCoordinates.size() != mRightCoordinates.size())
+            throw new IllegalStateException();
+
+        Collections.reverse(mLeftCoordinates);
+        Collections.reverse(mRightCoordinates);
+        Collections.reverse(mColors);
+
+        for (int i = 0; i < mLeftCoordinates.size(); i++) {
+            mLeftCoordinates.set(i, 100 - mLeftCoordinates.get(i));
+            mRightCoordinates.set(i, 100 - mRightCoordinates.get(i));
         }
     }
 

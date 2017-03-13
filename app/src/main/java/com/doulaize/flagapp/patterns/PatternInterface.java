@@ -14,7 +14,23 @@ public abstract class PatternInterface {
 
     abstract public patternTypeEnum getPatternType();
 
+    public void setRatio(Ratio ratio) {
+        mRatio = ratio;
+    }
+
     abstract public void onDraw(Canvas canvas, boolean drawEdges);
+
+    public boolean isButtonOrthoAllowed() {
+        return false;
+    }
+
+    public boolean isButtonHorizontalEqAllowed() {
+        return false;
+    }
+
+    public boolean isButtonVerticalEqAllowed() {
+        return false;
+    }
 
     public boolean isButtonAddAllowed() {
         return false;
@@ -24,20 +40,38 @@ public abstract class PatternInterface {
         return false;
     }
 
-    public void setRatio(Ratio ratio) {
-        mRatio = ratio;
+    public boolean isButtonReverseHorizontalAllowed() {
+        return false;
+    }
+
+    public boolean isButtonReverseVerticalAllowed() {
+        return false;
+    }
+
+
+    public void buttonOrthoPressed() {
+    }
+
+    public void buttonHorizontalEqPressed() {
+    }
+
+    public void buttonVerticalEqPressed() {
     }
 
     public void buttonAddPressed() {
     }
 
-
     public void buttonRemovePressed() {
+    }
+
+    public void buttonReverseHorizontalPressed() {
+    }
+
+    public void buttonReverseVerticalPressed() {
     }
 
     public void setColor(float x, float y, int color) {
     }
-
 
     public enum patternTypeEnum {
         BORDER, CROSS, FESS, GREEKCROSS, PALE, PALL, QUADRISECTION, SALTIRE

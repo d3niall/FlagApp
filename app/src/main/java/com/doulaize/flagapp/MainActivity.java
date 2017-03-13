@@ -100,13 +100,15 @@ public class MainActivity extends AppCompatActivity
                     onLongClickColorSelection();
                     return super.onDoubleTap(e);
                 }
+
                 @Override
                 public boolean onSingleTapUp(MotionEvent e) {
                     setColorSelection(!mFlag.getFmsState().equals(Flag.APP_STATE.FLAG_FSM_STATE_COLOR_SELECTED));
                     return super.onSingleTapUp(e);
                 }
+
                 @Override
-                public void onLongPress(MotionEvent e){
+                public void onLongPress(MotionEvent e) {
                     onLongClickColorSelection();
                     super.onLongPress(e);
                 }
@@ -246,8 +248,7 @@ public class MainActivity extends AppCompatActivity
         vibrator.vibrate(Constants.VIBRATING_TIME_SMALL);
 
         int[] primitive_default_flag_colors = new int[default_flag_colors.size()];
-        for (int i=0; i < primitive_default_flag_colors.length; i++)
-        {
+        for (int i = 0; i < primitive_default_flag_colors.length; i++) {
             primitive_default_flag_colors[i] = default_flag_colors.get(i).intValue();
         }
 
@@ -260,12 +261,43 @@ public class MainActivity extends AppCompatActivity
                 .show(this);
     }
 
+    public void onClickButtonOrtho(View v) {
+
+        mFlag.getActiveLayer().getPatternInterface().buttonOrthoPressed();
+        UpdateMainContentDisplay();
+    }
+
+    public void onClickButtonHorizontalEq(View v) {
+
+        mFlag.getActiveLayer().getPatternInterface().buttonHorizontalEqPressed();
+        UpdateMainContentDisplay();
+    }
+
+    public void onClickButtonVerticalEq(View v) {
+
+        mFlag.getActiveLayer().getPatternInterface().buttonVerticalEqPressed();
+        UpdateMainContentDisplay();
+    }
+
+    public void onClickButtonReverseHorizontal(View v) {
+
+        mFlag.getActiveLayer().getPatternInterface().buttonReverseHorizontalPressed();
+        UpdateMainContentDisplay();
+    }
+
+
+    public void onClickButtonReverseVertical(View v) {
+
+        mFlag.getActiveLayer().getPatternInterface().buttonReverseVerticalPressed();
+        UpdateMainContentDisplay();
+    }
+
+
     public void onClickButtonAdd(View v) {
 
         mFlag.getActiveLayer().getPatternInterface().buttonAddPressed();
         UpdateMainContentDisplay();
     }
-
 
     public void onClickButtonRemove(View v) {
 
@@ -309,6 +341,11 @@ public class MainActivity extends AppCompatActivity
 
             findViewById(R.id.button_pattern_add).setVisibility(mFlag.getActiveLayer().getPatternInterface().isButtonAddAllowed() ? View.VISIBLE : View.GONE);
             findViewById(R.id.button_pattern_remove).setVisibility(mFlag.getActiveLayer().getPatternInterface().isButtonRemoveAllowed() ? View.VISIBLE : View.GONE);
+            findViewById(R.id.button_pattern_reverse_horizontal).setVisibility(mFlag.getActiveLayer().getPatternInterface().isButtonReverseHorizontalAllowed() ? View.VISIBLE : View.GONE);
+            findViewById(R.id.button_pattern_reverse_vertical).setVisibility(mFlag.getActiveLayer().getPatternInterface().isButtonReverseVerticalAllowed() ? View.VISIBLE : View.GONE);
+            findViewById(R.id.button_pattern_ortho).setVisibility(mFlag.getActiveLayer().getPatternInterface().isButtonOrthoAllowed() ? View.VISIBLE : View.GONE);
+            findViewById(R.id.button_pattern_horizontal_eq).setVisibility(mFlag.getActiveLayer().getPatternInterface().isButtonHorizontalEqAllowed() ? View.VISIBLE : View.GONE);
+            findViewById(R.id.button_pattern_vertical_eq).setVisibility(mFlag.getActiveLayer().getPatternInterface().isButtonVerticalEqAllowed() ? View.VISIBLE : View.GONE);
         }
 
         mFlagDrawingView.invalidate();
