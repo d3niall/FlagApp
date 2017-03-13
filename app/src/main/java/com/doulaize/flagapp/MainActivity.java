@@ -25,13 +25,19 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SelectFlagPatternListener, NewRatioListener, ColorPickerDialogListener {
@@ -43,7 +49,7 @@ public class MainActivity extends AppCompatActivity
     ImageButton mButtonColorSelection;
     View mButtonColorSelectionBackground;
     ColorFilter mDefaultColorFilter;
-    int[] default_flag_colors = null;
+    List<Integer> default_flag_colors = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,19 +93,42 @@ public class MainActivity extends AppCompatActivity
 
         mButtonColorSelection = (ImageButton) findViewById(R.id.image_button_color_selection);
         mButtonColorSelectionBackground = findViewById(R.id.image_button_color_selection_background);
-        mButtonColorSelection.setOnLongClickListener(new View.OnLongClickListener() {
+        mButtonColorSelection.setOnTouchListener(new View.OnTouchListener() {
+            private GestureDetector gestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    onLongClickColorSelection();
+                    return super.onDoubleTap(e);
+                }
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    setColorSelection(!mFlag.getFmsState().equals(Flag.APP_STATE.FLAG_FSM_STATE_COLOR_SELECTED));
+                    return super.onSingleTapUp(e);
+                }
+                @Override
+                public void onLongPress(MotionEvent e){
+                    onLongClickColorSelection();
+                    super.onLongPress(e);
+                }
+            });
 
             @Override
-            public boolean onLongClick(View v) {
-                onLongClickColorSelection(v);
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.d("TEST", "Raw event: " + event.getAction() + ", (" + event.getRawX() + ", " + event.getRawY() + ")");
+                gestureDetector.onTouchEvent(event);
                 return true;
             }
-
         });
+
 
         mDefaultColorFilter = mButtonColorSelection.getColorFilter();
         mButtonColorSelectionBackground.setBackgroundColor(0);
-        default_flag_colors = new int[]{0xFFF44336, 0xFFE91E63, 0xFFFF2C93, 0xFF9C27B0, 0xFF673AB7, 0xFF3F51B5};
+        default_flag_colors.add(0xFFFF0000);
+        default_flag_colors.add(0xFF00FF00);
+        default_flag_colors.add(0xFF0000FF);
+        default_flag_colors.add(0xFFFF00FF);
+        default_flag_colors.add(0xFF00FFFF);
+        default_flag_colors.add(0xFFFFFF00);
     }
 
 
@@ -197,10 +226,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void onClickColorSelection(View v) {
-        setColorSelection(!mFlag.getFmsState().equals(Flag.APP_STATE.FLAG_FSM_STATE_COLOR_SELECTED));
-    }
-
     public void setColorSelection(boolean activate) {
         if (activate) {
             mFlag.setFmsState(Flag.APP_STATE.FLAG_FSM_STATE_COLOR_SELECTED);
@@ -215,14 +240,20 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void onLongClickColorSelection(View v) {
+    public void onLongClickColorSelection() {
 
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(Constants.VIBRATING_TIME_SMALL);
 
+        int[] primitive_default_flag_colors = new int[default_flag_colors.size()];
+        for (int i=0; i < primitive_default_flag_colors.length; i++)
+        {
+            primitive_default_flag_colors[i] = default_flag_colors.get(i).intValue();
+        }
+
         ColorPickerDialog.newBuilder()
                 .setAllowCustom(true)
-                .setPresets(default_flag_colors)
+                .setPresets(primitive_default_flag_colors)
                 .setColor(mFlag.getColorSelected())
                 .setShowAlphaSlider(false)
                 .setShowColorShades(false)
@@ -292,6 +323,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onColorSelected(int dialogId, @ColorInt int color) {
 
+        if (default_flag_colors.indexOf(color) == -1)
+            default_flag_colors.add(0, color);
         mFlag.setColorSelected(color);
         setColorSelection(true);
     }

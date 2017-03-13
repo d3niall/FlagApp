@@ -58,7 +58,7 @@ public class FlagPatternPale extends PatternInterface {
 
         for (int i = 0; i < mTopCoordinates.size(); ++i) {
 
-            paint.setStyle(Paint.Style.FILL);
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setColor(mColors.get(i));
             Path path = new Path();
             path.moveTo(xTop, yTop);
@@ -68,6 +68,7 @@ public class FlagPatternPale extends PatternInterface {
             path.lineTo(xTop, yTop);
             canvas.drawPath(path, paint);
 
+            // TODO : When drawing edges, choose color according to the two side colors, and only draw he division (no need to draw the whole rect
             if (drawEdges) {
                 Path pathEdge = new Path();
                 paint.setStyle(Paint.Style.STROKE);
@@ -94,17 +95,6 @@ public class FlagPatternPale extends PatternInterface {
         path.lineTo(xTop, yTop);
         canvas.drawPath(path, paint);
 
-        if (drawEdges) {
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(COLOR_EDGE);
-            Path pathEdge = new Path();
-            pathEdge.moveTo(xTop, yTop);
-            pathEdge.lineTo(mRatio.getHorizontalOffset() + mRatio.getViewWidth(), yTop);
-            pathEdge.lineTo(mRatio.getHorizontalOffset() + mRatio.getViewWidth(), yBottom);
-            pathEdge.lineTo(xBottom, yBottom);
-            pathEdge.lineTo(xTop, yTop);
-            canvas.drawPath(pathEdge, paint);
-        }
     }
 
     @Override

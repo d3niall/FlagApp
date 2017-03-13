@@ -55,6 +55,8 @@ import android.widget.TextView;
 import java.util.Arrays;
 import java.util.Locale;
 
+import static java.lang.Math.min;
+
 /**
  * <p>A dialog to pick a color.</p>
  *
@@ -467,26 +469,12 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
     }
 
     private void loadPresets() {
-        int alpha = Color.alpha(color);
+
         presets = getArguments().getIntArray(ARG_PRESETS);
         if (presets == null) presets = MATERIAL_COLORS;
-        boolean isMaterialColors = presets == MATERIAL_COLORS;
-        presets = Arrays.copyOf(presets, presets.length); // don't update the original array when modifying alpha
-        if (alpha != 255) {
-            // add alpha to the presets
-            for (int i = 0; i < presets.length; i++) {
-                int color = presets[i];
-                int red = Color.red(color);
-                int green = Color.green(color);
-                int blue = Color.blue(color);
-                presets[i] = Color.argb(alpha, red, green, blue);
-            }
-        }
+        presets = Arrays.copyOf(presets, min(presets.length, 14));
         presets = unshiftIfNotExists(presets, color);
-        if (isMaterialColors && presets.length == 19) {
-            // Add black to have a total of 20 colors if the current color is in the material color palette
-            presets = pushIfNotExists(presets, Color.argb(alpha, 0, 0, 0));
-        }
+        presets = pushIfNotExists(presets, Color.argb(0, 0, 0, 0));
     }
 
     void createColorShades(@ColorInt final int color) {
@@ -695,8 +683,8 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         }
         if (!present) {
             int[] newArray = new int[array.length + 1];
-            newArray[newArray.length - 1] = value;
-            System.arraycopy(array, 0, newArray, 0, newArray.length - 1);
+            newArray[0] = value;
+            System.arraycopy(array, 0, newArray, 1, newArray.length - 1);
             return newArray;
         }
         return array;
