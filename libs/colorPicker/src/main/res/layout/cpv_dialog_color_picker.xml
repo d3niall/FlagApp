@@ -38,7 +38,7 @@
           android:layout_gravity="center_horizontal"
           android:paddingLeft="4dp"
           android:paddingRight="4dp"
-          android:src="@drawable/ic_arrow_drop_down_black_24dp"
+          android:src="@drawable/cpv_arrow_drop_down_black"
           tools:ignore="ContentDescription"/>
 
       <com.jrummyapps.android.colorpicker.ColorPanelView

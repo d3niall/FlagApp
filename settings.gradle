@@ -1,2 +1,3 @@
-include ':app', ':colorPicker'
+include ':app', ':colorPicker', ':DragNDropList'
 project(':colorPicker').projectDir = new File('libs/colorPicker')
+project(':DragNDropList').projectDir = new File('libs/DragNDropList')

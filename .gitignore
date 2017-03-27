@@ -9,3 +9,8 @@
 .externalNativeBuild
 .idea/*
 
+
+libs/*/build/*
+libs/*/.idea/*
+
+

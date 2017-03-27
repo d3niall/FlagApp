@@ -9,6 +9,7 @@ import com.doulaize.flagapp.patterns.PatternInterface;
 import com.doulaize.flagapp.views.FlagDrawingView;
 import com.jrummyapps.android.colorpicker.ColorPickerDialog;
 import com.jrummyapps.android.colorpicker.ColorPickerDialogListener;
+import com.terlici.dragndroplist.DragNDropListView;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -73,8 +74,8 @@ public class MainActivity extends AppCompatActivity
 
         mFlagLayersAdapter = new FlagLayersAdapter(this, R.layout.first_toolbar_item, mFlag.getLayers());
 
-        ListView listView = (ListView) findViewById(R.id.first_toolbar_list);
-        listView.setAdapter(mFlagLayersAdapter);
+        DragNDropListView listView = (DragNDropListView) findViewById(R.id.first_toolbar_list);
+        listView.setDragNDropAdapter(mFlagLayersAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long arg) {
